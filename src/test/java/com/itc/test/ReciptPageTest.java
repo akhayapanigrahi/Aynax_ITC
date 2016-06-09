@@ -16,17 +16,12 @@ public class ReciptPageTest extends BaseTestObject{
 	boolean titleflag=false;
 
 	@Parameters({"browserType"})
-	@Test(priority=0, enabled=true,groups="SanityTest")
-	public void Login() throws Exception{
-		login.verifyLoginPage();
-		
-	}
-	
 	@Test(priority=1, enabled=true,groups="SanityTest")
 	public void verifyuploadRecipt() throws Exception
 	{
 	try 
 	{
+		login.verifyLoginPage();
 		objReciptPage = new ReciptPage(driver);
 		objReciptPage.clickOnLisRecipt();
 	    objReciptPage.uploadRecipt();;
@@ -38,7 +33,6 @@ public class ReciptPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}

@@ -18,7 +18,7 @@ public class NewVendorPageTest extends BaseTestObject{
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
 	@Parameters({"browserType"})
-	@Test(priority=0, enabled=true)
+	@Test(priority=0, enabled=true,groups="Regression")
 	public void Login() throws Exception{
 		login.verifyLoginPage();
 		
@@ -45,11 +45,10 @@ public class NewVendorPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}
-	@Test(priority=2, enabled=true)
+	@Test(priority=2, enabled=true,groups="Regression")
 	public void verifyNewVendor2() throws Exception
 	{
 	try 
@@ -70,7 +69,6 @@ public class NewVendorPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}
@@ -93,7 +91,6 @@ public class NewVendorPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}

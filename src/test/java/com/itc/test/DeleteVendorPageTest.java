@@ -16,43 +16,16 @@ public class DeleteVendorPageTest extends BaseTestObject{
 	String titleflag=null;
 		
 	@Parameters({"browserType"})
-	@Test(priority=0,enabled=true,groups="Regression")
-	public void Login() throws Exception{
-		login.verifyLoginPage();
-		
-	}
-	
 	@Test(priority=1, enabled=true,groups="Regression")
-	public void verifyDeleteVendor1() throws Exception
+	public void verifyDeleteVendor() throws Exception
 	{
 	try 
 	{
+		login.verifyLoginPage();
 		objDeleteVendorPage = new DeleteVendorPage(driver);
 		objDeleteVendorPage.clickOnListVendor();
 		objDeleteVendorPage.vendorDeletion1();
-		/*String title=objDeleteVendorPage.isTitleDisplayed();
-		Assert.assertTrue(title.contains("List of Vendors:"));*/
-	    flag1=objDeleteVendorPage.isResultPageDisplayed();
-	    Assert.assertTrue(flag1);
-	        
-	} 
-	
-	catch (Exception e) 
-	{
-		e.printStackTrace();
-	}
-
-	}
-	@Test(priority=2, enabled=true,groups="Regression")
-	public void verifyDeleteVendor2() throws Exception
-	{
-	try 
-	{
-		objDeleteVendorPage = new DeleteVendorPage(driver);
-		objDeleteVendorPage.clickOnListVendor();
 		objDeleteVendorPage.vendorDeletion2();
-		/*String title=objDeleteVendorPage.isTitleDisplayed();
-		Assert.assertTrue(title.contains("List of Vendors:"));*/
 	    flag1=objDeleteVendorPage.isResultPageDisplayed();
 	    Assert.assertTrue(flag1);
 	        
@@ -64,4 +37,5 @@ public class DeleteVendorPageTest extends BaseTestObject{
 	}
 
 	}
+	
 }

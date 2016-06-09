@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sanity Test Suite">
+<suite name="Sanity Test Suite",,parallel="false">
 	<parameter name="browserType" value="FF" />
 	<listeners>
         <listener class-name="com.itc.util.CustomReport" />

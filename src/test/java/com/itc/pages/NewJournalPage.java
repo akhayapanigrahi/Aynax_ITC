@@ -56,7 +56,7 @@ public class NewJournalPage extends BasePageObject {
 				AynaxUtil.explicitWait(3000);
 
 			} else {
-				logger.info("New Expense tab is not displayed");
+				logger.info("New Accounting tab is not displayed");
 			}
 
 		} catch (Exception e) {
@@ -147,7 +147,7 @@ public class NewJournalPage extends BasePageObject {
 			clickSave();
 
 		} catch (Exception e) {
-			throw new Exception("New Expense link is not present in Expense page::");
+			throw new Exception("New Journal link is not present in Expense page::");
 		}
 		// return new LoginPage(driver);
 	}
@@ -163,7 +163,7 @@ public class NewJournalPage extends BasePageObject {
 
 			flag1 = isElementPresent(successDialog);
 			if (flag1) {
-				logger.info("Success page of Invoice creation is displayed");
+				logger.info("Success page of Journal creation is displayed");
 				String expectedtitle = getPageTitle();
 				logger.info("Title is "+expectedtitle);
 				Assert.assertTrue(expectedtitle.contains("Edit Transaction::"));

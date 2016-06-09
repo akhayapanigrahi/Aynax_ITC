@@ -18,7 +18,7 @@ public class EditExpensePageTest extends BaseTestObject {
 			+ "\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
 	@Parameters({ "browserType" })
-	@Test(priority = 0, enabled = true, groups = "SanityTest")
+	@Test(priority = 0, enabled = true, groups = {"SanityTest","Regression"})
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
@@ -67,10 +67,12 @@ public class EditExpensePageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 3, enabled = true, groups = "Regression")
+	//@Test(priority = 3, enabled = true, groups = "Regression")
 	public void verifyEditExpenseCreation3() throws Exception {
 		try {
-
+			
+			NewExpensePageTest obj=new NewExpensePageTest();
+			obj.verifyExpenseCreation1();
 			objEditExpensePage.clickOnExpenseLink1();
 			String amount = getValFromExcel(5, 6);
 			String notes = getValFromExcel(4, 5);

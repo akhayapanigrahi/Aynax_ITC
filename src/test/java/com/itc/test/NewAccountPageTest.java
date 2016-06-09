@@ -42,7 +42,6 @@ public class NewAccountPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}
@@ -84,7 +83,6 @@ public class NewAccountPageTest extends BaseTestObject{
 	catch (Exception e) 
 	{
 		e.printStackTrace();
-		//throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE" + "\n clickOnSiteLogoAndCheckThePageTitle" +e.getLocalizedMessage());
 	}
 
 	}

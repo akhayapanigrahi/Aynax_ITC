@@ -17,7 +17,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
 	@Parameters({ "browserType" })
-	@Test(groups="SanityTest")
+	@Test(groups={"SanityTest","Regression"})
 	
 	public void Login() throws Exception {
 		login.verifyLoginPage();
@@ -81,6 +81,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 	@Test(priority = 2, enabled = true,groups="Regression")
 	public void verifyCustomerCreation3() throws Exception {
 		try {
+			login.verifyLoginPage();
 			objNewCustPage = new NewCustomerPage(driver);
 			objNewCustPage.clickOnNewCustomer();
 			String customerName =getValFromExcel(5,6);

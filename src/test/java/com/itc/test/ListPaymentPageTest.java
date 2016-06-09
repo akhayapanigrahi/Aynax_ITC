@@ -14,15 +14,10 @@ public class ListPaymentPageTest extends BaseTestObject {
 	boolean titleflag=false;
 	
 	@Parameters({ "browserType"})
-	@Test(priority = 0, enabled = true,groups="SanityTest")
-	public void Login() throws Exception {
-		login.verifyLoginPage();
-
-	}
-
 	@Test(priority = 1, enabled = true,groups="SanityTest")
 	public void verifyNewExpensePageDisplay() throws Exception {
 		try {
+			login.verifyLoginPage();
 			objListPaymentPage = new ListPaymentPage(driver);
 			objListPaymentPage.clickOnListPayment();
 			flag1=objListPaymentPage.isResultPageDisplayed();

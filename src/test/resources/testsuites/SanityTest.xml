@@ -14,11 +14,11 @@
 		</groups>
 		<classes>
 			<class name="com.itc.test.NewExpensePageTest" />
-			<!-- <class name="com.itc.test.EditExpensePageTest" />
+			<class name="com.itc.test.EditExpensePageTest" />
 			<class name="com.itc.test.ReciptPageTest" />
 			<class name="com.itc.test.ListPaymentPageTest" />
 			<class name="com.itc.test.NewInvoicePageTest" />
-			<class name="com.itc.test.NewCustomerPageTest" /> -->
+			<class name="com.itc.test.NewCustomerPageTest" /> 
 		</classes>
 	</test>
 </suite>

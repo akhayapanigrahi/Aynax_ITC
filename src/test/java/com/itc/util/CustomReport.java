@@ -2,20 +2,26 @@ package com.itc.util;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -23,6 +29,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import org.apache.log4j.Logger;
 import org.testng.IInvokedMethod;
 import org.testng.IReporter;
 import org.testng.IResultMap;
@@ -38,6 +46,13 @@ import org.testng.collections.Lists;
 import org.testng.internal.Utils;
 import org.testng.xml.XmlSuite;
 
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
+import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
+import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.MessageBody;
+
 public class CustomReport implements IReporter 
 {
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(" MMM d 'at' hh:mm a");
@@ -46,7 +61,8 @@ public class CustomReport implements IReporter
 	private Integer m_testIndex;
 	private int m_methodIndex;
 	private Scanner scanner;
-	
+	public static Logger logger = Logger.getLogger(CustomReport.class);
+
 	/**
 	 * This method is the entry point of this class. TestNG calls this listener method to generate the report.
 	 */
@@ -79,11 +95,25 @@ public class CustomReport implements IReporter
 			e.printStackTrace();
 		}
 		startHtml( m_out );
-		generateSuiteSummaryReport( suites );
+		try {
+			generateSuiteSummaryReport( suites );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		generateMethodSummaryReport( suites );
 		//generateMethodDetailReport( suites );
 		endHtml(m_out);
 		//sendreport();
+		try {
+			List<String> lst=new ArrayList<String>();
+			lst.add("Akshaya.Panigrahi@Itcinfotech.com");
+			
+			sendMailViaExchnageService("Akshaya.Panigrahi@itcinfotech.com","login@12", "Hello", "Please find the report", lst);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		m_out.flush();
 		
 		m_out.close();
@@ -450,8 +480,8 @@ public class CustomReport implements IReporter
 	
 	
 	
-	public void generateSuiteSummaryReport( List<ISuite> suites ) {
-		printExecutionParameters();
+	public void generateSuiteSummaryReport( List<ISuite> suites ) throws Exception {
+		printExecutionParameters(suites);
 		m_out.println("<b align=\"center\">Execution Summary</b>");
 		tableStart("testOverview", null);
 		m_out.print("<tr>");
@@ -515,33 +545,37 @@ public class CustomReport implements IReporter
 		}
 	}
 	
-	private void printExecutionParameters(List<XmlSuite> xml, List<ISuite> suites, String outdir ) {
+	private void printExecutionParameters( List<ISuite> suites) throws Exception {
 		for ( ISuite suite : suites ) {
-		String suiteName = suite.getName();
-		String browser=suiteName.
-				
-		}
-		m_out.println("<b>Execution Parameters</b>");
+			String suiteName = suite.getName();
+			String browser=suite.getParameter("browserType");
+			Properties prop = new Properties();
+			String propertyFilePath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testData.properties";
+			InputStream input = new FileInputStream(propertyFilePath);
+			prop.load(input);
+			 String url = prop.getProperty("url");
+			 String browserVersion=prop.getProperty("browserVersion");
+			 String OS=prop.getProperty("OS");
+			 
+		m_out.println("<b>Environment Details</b>");
 		tableStart("testOverview", null);
 		m_out.print("<tr>");
-		tableColumnStart("baseUrl");
-		tableColumnStart("hubUrl");
-		tableColumnStart("osType");
-		tableColumnStart("browser");
-		tableColumnStart("browserVersion");
-		tableColumnStart("resolution");
-		tableColumnStart("variable");
+		tableColumnStart("Suite Name");
+		tableColumnStart("BaseUrl");
+		tableColumnStart("OSType");
+		tableColumnStart("Browser");
+		tableColumnStart("BrowserVersion");
+		
 		m_out.println("</tr>");
-		summaryCell( "baseUrl", true );
-		summaryCell( "hubUrl", true );
-		summaryCell( "osType", true );
-		summaryCell( "browser", true );
-		summaryCell( "browserVersion", true );
-		summaryCell( "resolution", true );
-		summaryCell( "variable", true );
+		summaryCell( suiteName, true );
+		summaryCell( url, true );
+		summaryCell( OS, true );
+		summaryCell( browser, true );
+		summaryCell( browserVersion, true );
+		
 		m_out.println("</table>");
 		m_out.println("<p></p>");
-		
+		}
 		
 	}
 	
@@ -679,7 +713,7 @@ public class CustomReport implements IReporter
 		throw new RuntimeException(ex);
 		}
 	}
-public void sendreport1(){
+/*public void sendreport1(){
 	String htmlPath = System.getProperty("user.dir")+"\\test-output\\CustomReport.html";
 
 	String host="smtp.gmail.com"; 
@@ -711,7 +745,23 @@ public void sendreport1(){
        System.out.println("message sent....");  
     }catch (MessagingException ex) {ex.printStackTrace();}  
  }  
-}
+}*/
+	public void sendMailViaExchnageService(String username, String password, String subject, String body, List<String> toAddressList) throws Exception {
+		 
+        logger.info("Mail sending Inprogress...");
+        ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+        ExchangeCredentials credentials = new WebCredentials(username, password);
+        service.setCredentials(credentials);
+        service.setUrl(new URI("https://outlook.office365.com/EWS/Exchange.asmx"));
+        EmailMessage msg = new EmailMessage(service);
+        msg.setSubject(subject);
+        msg.setBody(MessageBody.getMessageBodyFromText(body));
+        Iterator<String> mailList = toAddressList.iterator();
+        msg.getToRecipients().addSmtpAddressRange(mailList);
+        msg.send();
+        logger.info("Mail sending Success...Please check your inbox");
 
+ }
+}
 
 

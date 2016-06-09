@@ -18,7 +18,7 @@
 					<skipTests>${skip.tests}</skipTests>
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>SanityTest.xml</suiteXmlFile> -->
-						<SuiteXmlFile>${basedir}\src\test\resource\testsuites\${SuiteFile}</SuiteXmlFile>
+						<SuiteXmlFile>${basedir}\src\test\resources\testsuites\${SuiteFile}</SuiteXmlFile>
 					</suiteXmlFiles>
 
 				</configuration>

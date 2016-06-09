@@ -48,7 +48,7 @@ public class EditExpensePage extends BasePageObject {
 		try {
 			flag = isElementPresent(ExpensesTab);
 			if (flag) {
-				logger.info("New Expense tab is displayed");
+				logger.info("Edit Expense tab is displayed");
 				WebElement expTab = driver.findElement(ExpensesTab);
 				WebElement listExpenselink = driver.findElement(listExpenseLink);
 				Actions act = new Actions(driver);
@@ -60,7 +60,7 @@ public class EditExpensePage extends BasePageObject {
 				AynaxUtil.explicitWait(3000);
 
 			} else {
-				logger.info("New Expense tab is not displayed");
+				logger.info("Edit Expense tab is not displayed");
 			}
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -144,7 +144,7 @@ public class EditExpensePage extends BasePageObject {
 
 			} else {
 
-				System.out.println("New Expense tab is not displayed");
+				System.out.println("Edit Expense tab is not displayed");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -163,7 +163,7 @@ public class EditExpensePage extends BasePageObject {
 
 			} else {
 
-				System.out.println("New Expense tab is not displayed");
+				System.out.println("Edit Expense tab is not displayed");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -241,7 +241,7 @@ public class EditExpensePage extends BasePageObject {
 			flag1=isElementPresent(successDialog);
 			if (flag1) 
 			{
-				logger.info("Success page of Expense creation is displayed");
+				logger.info("Success page of Edit Expense is displayed");
 			String expectedtitle = getPageTitle();
 			logger.info("Title is "+expectedtitle);
 			Assert.assertTrue(expectedtitle.contains("List of Expenses :: Aynax.com"));
@@ -252,7 +252,7 @@ public class EditExpensePage extends BasePageObject {
 			}			
 			else
 			{
-				logger.info("Error page of Expense creation is displayed");
+				logger.info("Error page of Edit Expense creation is displayed");
 				String expectedtitle = getPageTitle();
 				Assert.assertTrue(expectedtitle.startsWith("Edit Expense:: "));
 				String text = getText(errorDialog);
@@ -262,7 +262,7 @@ public class EditExpensePage extends BasePageObject {
 		} 
 		catch (Exception e) 
 		{
-			throw new Exception("New Expense page is displayed::"+isResultPageDisplayed()+e.getLocalizedMessage());
+			throw new Exception("Edit Expense page is displayed::"+isResultPageDisplayed()+e.getLocalizedMessage());
 		}
 		return flag1;
 	}
@@ -294,7 +294,7 @@ public class EditExpensePage extends BasePageObject {
 		} 
 		catch (Exception e) 
 		{
-			throw new Exception("New Expense page is displayed::"+isResultPageDisplayed()+e.getLocalizedMessage());
+			throw new Exception("Edit Expense page is displayed::"+isResultPageDisplayed()+e.getLocalizedMessage());
 		}
 		return flag1;
 	}
@@ -334,12 +334,12 @@ public class EditExpensePage extends BasePageObject {
 		try {
 			
 			logger.info("Moving to List vendor link");
-			WebElement expTab = driver.findElement(ExpensesTab);
+			/*WebElement expTab = driver.findElement(ExpensesTab);
 			WebElement vendorlink = driver.findElement(ListVendorLink);
 			Actions act = new Actions(driver);
 			act.moveToElement(expTab).click(expTab).click(vendorlink).doubleClick().build().perform();
 			AynaxUtil.explicitWait(3000);
-			act.click().build().perform();
+			act.click().build().perform();*/
 			
 			
 			String vendorName = getValFromExcel(4, 2);

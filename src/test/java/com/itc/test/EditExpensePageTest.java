@@ -14,40 +14,27 @@ public class EditExpensePageTest extends BaseTestObject {
 	boolean flag = false;
 	boolean flag1 = false;
 	boolean titleflag = false;
-	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
+	public static String excelPath = System.getProperty("user.dir")
+			+ "\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType"})
-	@Test(priority = 0, enabled = true,groups="SanityTest")
+	@Parameters({ "browserType" })
+	@Test(priority = 0, enabled = true, groups = "SanityTest")
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
 	}
 
-	/*@Test(priority = 1, enabled = true,groups="SanityTest")
-	public void verifyNewExpensePageDisplay() throws Exception {
-		try {
-			
-
-		}
-
-		catch (Exception e) {
-			throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE"
-					+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
-
-		}
-	}*/
-
-	@Test(priority = 1, enabled = true,groups="SanityTest")
+	@Test(priority = 1, enabled = true, groups = "SanityTest")
 	public void verifyEditExpenseCreation1() throws Exception {
 		try {
 			objEditExpensePage = new EditExpensePage(driver);
 			objEditExpensePage.clickOnListExpense();
 			objEditExpensePage.clickOnExpenseLink1();
-			String amount=getValFromExcel(1, 4);
-			String notes=getValFromExcel(1, 5);
-			objEditExpensePage.editExpense(amount,notes);
+			String amount = getValFromExcel(1, 4);
+			String notes = getValFromExcel(1, 5);
+			objEditExpensePage.editExpense(amount, notes);
 			flag1 = objEditExpensePage.isResultPageDisplayed();
-			//Assert.assertTrue(flag1);
+			// Assert.assertTrue(flag1);
 			titleflag = objEditExpensePage.isTitleDisplayed();
 
 		}
@@ -58,16 +45,17 @@ public class EditExpensePageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 2, enabled = true,groups="SanityTest")
+
+	@Test(priority = 2, enabled = true, groups = "SanityTest")
 	public void verifyEditExpenseCreation2() throws Exception {
 		try {
-			
+
 			objEditExpensePage.clickOnExpenseLink2();
-			String amount=getValFromExcel(2, 4);
-			String notes=getValFromExcel(2, 5);
-			objEditExpensePage.editExpense(amount,notes);
+			String amount = getValFromExcel(2, 4);
+			String notes = getValFromExcel(2, 5);
+			objEditExpensePage.editExpense(amount, notes);
 			flag1 = objEditExpensePage.isResultPageDisplayed();
-			//Assert.assertTrue(flag1);
+			// Assert.assertTrue(flag1);
 			titleflag = objEditExpensePage.isTitleDisplayed();
 
 		}
@@ -78,17 +66,17 @@ public class EditExpensePageTest extends BaseTestObject {
 		}
 
 	}
-	
-	@Test(priority = 3, enabled = true,groups="Regression")
+
+	@Test(priority = 3, enabled = true, groups = "Regression")
 	public void verifyEditExpenseCreation3() throws Exception {
 		try {
-			
+
 			objEditExpensePage.clickOnExpenseLink1();
-			String amount=getValFromExcel(5, 6);
-			String notes=getValFromExcel(4, 5);
-			objEditExpensePage.editExpense(amount,notes);
+			String amount = getValFromExcel(5, 6);
+			String notes = getValFromExcel(4, 5);
+			objEditExpensePage.editExpense(amount, notes);
 			flag1 = objEditExpensePage.isResultPageDisplayed();
-			//Assert.assertTrue(flag1);
+			// Assert.assertTrue(flag1);
 			titleflag = objEditExpensePage.isTitleDisplayed();
 
 		}
@@ -99,16 +87,15 @@ public class EditExpensePageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 4, enabled = true,groups="SanityTest")
-	public void verifyDeleteExpense() throws Exception {
+
+	@Test(priority = 4, enabled = true, groups = "SanityTest")
+	public void clearData() throws Exception {
 		try {
-			
-			objEditExpensePage.clickOnListExpense();
+
+			//objEditExpensePage.clickOnListExpense();
 			objEditExpensePage.deleteExpense();
-			
 			objEditExpensePage.isExpenseDeleted();
-			//Assert.assertTrue(flag1);
-			titleflag = objEditExpensePage.isTitleDisplayed();
+			objEditExpensePage.isTitleDisplayed();
 			objEditExpensePage.vendorDeletion1();
 			objEditExpensePage.vendorDeletion2();
 
@@ -120,14 +107,11 @@ public class EditExpensePageTest extends BaseTestObject {
 		}
 
 	}
-	
-	
-public static String getValFromExcel(int row,int col) throws Exception{
-		
+
+	public static String getValFromExcel(int row, int col) throws Exception {
+
 		ExcelutilObject.setExcelFile(excelPath, "EditExpense");
 		return ExcelutilObject.getCellData(row, col);
 	}
-
-	
 
 }

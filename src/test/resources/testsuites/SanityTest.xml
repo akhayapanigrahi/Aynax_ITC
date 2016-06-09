@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sanity Test Suite" verbose="5" parallel="classes" thread-count="10">
+<suite name="Sanity Test Suite">
 	<parameter name="browserType" value="FF" />
 	<listeners>
         <listener class-name="com.itc.util.CustomReport" />
     </listeners>
     
-	<test name="Sanity Tests">
+	<test name="Sanity Tests" preserve-order="true">
 	
 		<groups>
 			<run>

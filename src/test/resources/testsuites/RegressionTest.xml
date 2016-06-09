@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Monster Home page Test Suite">
-	<parameter name="url" value="http://www.aynax.com/" />
+	
 	<parameter name="browserType" value="FF" />
 	<test name="Regression Tests" preserve-order="true">
 	<groups>

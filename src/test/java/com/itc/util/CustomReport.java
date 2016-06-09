@@ -109,7 +109,7 @@ public class CustomReport implements IReporter
 			List<String> lst=new ArrayList<String>();
 			lst.add("Akshaya.Panigrahi@Itcinfotech.com");
 			
-			sendMailViaExchnageService("Akshaya.Panigrahi@itcinfotech.com","login@12", "Hello", "Please find the report", lst);
+			//sendMailViaExchnageService("Akshaya.Panigrahi@itcinfotech.com","login@12", "Hello", "Please find the report", lst);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -81,7 +81,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 	@Test(priority = 2, enabled = true,groups="Regression")
 	public void verifyCustomerCreation3() throws Exception {
 		try {
-			login.verifyLoginPage();
+			
 			objNewCustPage = new NewCustomerPage(driver);
 			objNewCustPage.clickOnNewCustomer();
 			String customerName =getValFromExcel(5,6);

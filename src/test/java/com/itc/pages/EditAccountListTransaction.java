@@ -207,10 +207,10 @@ public class EditAccountListTransaction extends BasePageObject {
 			} else {
 				logger.info("New Account creation error page is displayed");
 				String expectedtitle = getPageTitle();
-				Assert.assertTrue(expectedtitle.startsWith("New Account :: Aynax.com"));
+				Assert.assertTrue(expectedtitle.startsWith("Edit Account :: Aynax.com"));
 				String text = getText(errorDialog);
 				logger.info("The error text is" + text);
-				Assert.assertTrue(text.contains("Account name cannot be blank"));
+				Assert.assertTrue(text.contains("×"));
 
 			}
 		} catch (Exception e) {

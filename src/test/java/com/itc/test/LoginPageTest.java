@@ -19,7 +19,7 @@ public class LoginPageTest extends BaseTestObject {
 	public String Password = ObjProperty.getProperty("password");
 
 	@Parameters({ "browserType"})
-	@Test(priority = 0, enabled = true,groups="Regression")
+	@Test(priority = 0, enabled = true,groups={"Regression","SanityTest"})
 	public void verifyLoginPage() throws Exception {
 		try {
 

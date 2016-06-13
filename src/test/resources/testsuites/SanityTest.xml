@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sanity Test Suite",,parallel="false">
+<suite name="Sanity Test Suite">
 	<parameter name="browserType" value="FF" />
 	<listeners>
         <listener class-name="com.itc.util.CustomReport" />
@@ -18,7 +18,7 @@
 			<class name="com.itc.test.ReciptPageTest" />
 			<class name="com.itc.test.ListPaymentPageTest" />
 			<class name="com.itc.test.NewInvoicePageTest" />
-			<class name="com.itc.test.NewCustomerPageTest" /> 
+			<class name="com.itc.test.NewCustomerPageTest" />
 		</classes>
 	</test>
 </suite>

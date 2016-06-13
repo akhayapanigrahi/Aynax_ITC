@@ -20,7 +20,7 @@
 			<class name="com.itc.test.EditVendorPageTest" />
 			<class name="com.itc.test.DeleteVendorPageTest" />
 			<class name="com.itc.test.NewAccountPageTest" />
-			<class name="com.itc.test.EditAccountPageTest" />
+			<class name="com.itc.test.EditAccountPageTest" /> 
 			<class name="com.itc.test.EditAccounListTransactionTest" />
 			<class name="com.itc.test.NewJournalPageTest" />
 			<class name="com.itc.test.EditJournalPageTest" />

@@ -128,7 +128,7 @@ public class EditAccountPage extends BasePageObject {
 			AccTypeflag = isElementPresent(AcctTypeDropdown);
 			if (AccTypeflag) {
 				logger.info("Account type dropdown is displayed");
-				selectDropDown(AcctTypeDropdown, "Cash");
+				selectDropDown(AcctTypeDropdown, "Bank Account");
 				Assert.assertTrue(AccTypeflag, " Category dropdown is not displayed");
 
 			} else {

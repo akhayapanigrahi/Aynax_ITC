@@ -18,7 +18,7 @@ public class EditAccountPageTest extends BaseTestObject{
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
 	@Parameters({"browserType"})
-	@Test(groups="Regression")
+	@Test(priority=0,groups="Regression")
 	public void Login() throws Exception{
 		login.verifyLoginPage();
 	}

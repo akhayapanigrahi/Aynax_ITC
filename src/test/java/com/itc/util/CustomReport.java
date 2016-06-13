@@ -1,6 +1,5 @@
 package com.itc.util;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,8 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.IInvokedMethod;
 import org.testng.IReporter;
@@ -102,12 +99,14 @@ public class CustomReport implements IReporter{
 		generateMethodSummaryReport(suites);
 		// generateMethodDetailReport( suites );
 		endHtml(m_out);
-		// sendreport();
 		try {
 			List<String> lst = new ArrayList<String>();
 			lst.add("Manjunath.Reddy@apollo.edu");
-			System.out.println("Conetnts are"+htmlContents());
-			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", "Hello",htmlContents(), lst);
+			FileReader reader = new FileReader
+			          ("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
+			
+			//System.out.println("Conetents are" + htmlContents());
+			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", "Hello",htmlContents(reader), lst);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,9 +115,10 @@ public class CustomReport implements IReporter{
 		m_out.close();
 
 	}
-public String htmlContents(){
+public String  htmlContents() {
 	
-	StringBuilder contentBuilder = new StringBuilder();
+	
+	/*StringBuilder contentBuilder = new StringBuilder();
 	try {
 		FileReader fr=new FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
 	    BufferedReader in = new BufferedReader(fr);
@@ -128,12 +128,11 @@ public String htmlContents(){
 	    }
 	    in.close();
 	} catch (IOException e) {
-	}
-	String content = contentBuilder.toString();
-	return content;
-	
-	
+	}*/
+	return null;
 }
+	
+
 
 
 	protected PrintWriter createWriter(String outdir) throws IOException {

@@ -14,7 +14,7 @@ public class ListPaymentPageTest extends BaseTestObject {
 	boolean titleflag=false;
 	
 	@Parameters({ "browserType"})
-	@Test(priority = 1, enabled = true,groups="SanityTest")
+	@Test(priority = 1, enabled = true,groups="Regression")
 	public void verifyNewExpensePageDisplay() throws Exception {
 		try {
 			login.verifyLoginPage();

@@ -51,7 +51,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 1, enabled = true,groups="SanityTest")
+	@Test(priority = 1, enabled = true,groups="Regression")
 	public void verifyCustomerCreation2() throws Exception {
 		try {
 			objNewCustPage = new NewCustomerPage(driver);

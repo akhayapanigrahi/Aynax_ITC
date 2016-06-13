@@ -58,7 +58,6 @@ public class NewInvoicePageTest extends BaseTestObject {
 			objNewInvoicePage.clickOnNewInvoice();
 			String fromname =getValFromExcel(2,2);
 		    String fromaddress =getValFromExcel(2,3);
-		   // String custname =getValFromExcel(2,4);
 		    String address =getValFromExcel(2,5);
 		    String desc =getValFromExcel(2,6);
 		    String price =getValFromExcel(2,7);

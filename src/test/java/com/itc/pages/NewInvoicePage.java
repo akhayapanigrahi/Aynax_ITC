@@ -37,7 +37,7 @@ public class NewInvoicePage extends BasePageObject {
 	By custDropdown = By.id("to_name");
 	By custName = By.id("to_new_customer");
 	By custAddr = By.id("to_address");
-	By itemDropdown = By.xpath("//select[@name='item[]']");
+	By itemDropdown = By.xpath("//select[@id='itemSelect0']");
 	By invoiceNotes = By.id("invoice_notes");
 	By description = By.xpath("//textarea[@id='description[]']");
 	By unitPrice = By.xpath("//td[@class='invoiceDataPriceOrQty']/input[@id='unit_price[]']");
@@ -82,7 +82,7 @@ public class NewInvoicePage extends BasePageObject {
 		}
 	}
 
-	public void selectCustType() throws Exception {
+	public void selectCustTypeNew() throws Exception {
 		try {
 			custTypeflag = isElementPresent(custDropdown);
 			if (custTypeflag) {
@@ -159,7 +159,7 @@ public class NewInvoicePage extends BasePageObject {
 		try {
 			itemTypeflag = isElementPresent(itemDropdown);
 			if (itemTypeflag) {
-				logger.info("Customer type dropdown is displayed");
+				logger.info("Item type dropdown is displayed");
 					selectDropDown(itemDropdown, "Product");
 					Assert.assertTrue(itemTypeflag, " Item dropdown is not displayed");
 
@@ -176,8 +176,8 @@ public class NewInvoicePage extends BasePageObject {
 		try {
 			itemTypeflag = isElementPresent(itemDropdown);
 			if (itemTypeflag) {
-				logger.info("Customer type dropdown is displayed");
-					selectDropDown(itemDropdown, "Service");
+				logger.info("Item type dropdown is displayed");
+					selectDropDown(itemDropdown, "Hours");
 					Assert.assertTrue(itemTypeflag, " Item dropdown is not displayed");
 			} else {
 
@@ -230,7 +230,7 @@ public class NewInvoicePage extends BasePageObject {
 		try {
 			enterFromName(fromname);
 			enterFromAddress(fromaddress);
-			selectCustType();
+			selectCustTypeNew();
 			enterToCustName(custname);
 			enterToCustAddr(address);
 			selectItemType1();

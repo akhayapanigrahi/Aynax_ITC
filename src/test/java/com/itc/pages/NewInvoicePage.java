@@ -9,6 +9,7 @@ import org.testng.Assert;
 
 import com.itc.common.AynaxUtil;
 import com.itc.util.BasePageObject;
+import com.itc.util.ExcelutilObject;
 
 public class NewInvoicePage extends BasePageObject {
 
@@ -24,7 +25,8 @@ public class NewInvoicePage extends BasePageObject {
 	boolean titleflag = false;
 	boolean flag1 = false;
 	public static Logger logger = Logger.getLogger(NewInvoicePage.class);
-
+	public static String excelPath = System.getProperty("user.dir")
+			+ "\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 	/* Web elements */
 
 	By salesTab = By.xpath(".//*[@id='top-menu']//a[contains(.,'Sales')]");
@@ -97,7 +99,25 @@ public class NewInvoicePage extends BasePageObject {
 		}
 
 	}
+	public void selectCustTypeExisting() throws Exception {
+		try {
+			custTypeflag = isElementPresent(custDropdown);
+			if (custTypeflag) {
+				logger.info("Customer type dropdown is displayed");
+				String customerName =getValFromExcel(1,2);
+				
+				selectDropDown(custDropdown, customerName);
+				Assert.assertTrue(custTypeflag, " Category dropdown is not displayed");
 
+			} else {
+
+				logger.info("New Invoice tab is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	public void enterToCustName(String cust) throws Exception {
 		try {
 			toCustflag = isElementPresent(custName);
@@ -224,7 +244,25 @@ public class NewInvoicePage extends BasePageObject {
 			throw new Exception("New Expense link is not present in Expense page::");
 		}
 	}
-	
+	public void newInvoiceCreation1(String fromname, String fromaddress, String address, String desc,
+			String Uniprice, String Itemquan, String invnotes) throws Exception {
+		try {
+			enterFromName(fromname);
+			enterFromAddress(fromaddress);
+			selectCustTypeExisting();
+			//enterToCustName(custname);
+			enterToCustAddr(address);
+			selectItemType1();
+			enterDescription(desc);
+			enterUnitPrice(Uniprice);
+			enterQuantity(Itemquan);
+			enterInvoiceNotes(invnotes);
+			clickSave();
+
+		} catch (Exception e) {
+			throw new Exception("New Expense link is not present in Expense page::");
+		}
+	}
 	public boolean isTitleDisplayed() {
 
 		getPageTitle();
@@ -261,5 +299,9 @@ public class NewInvoicePage extends BasePageObject {
 		}
 		return flag1;
 	}
-
+public static String getValFromExcel(int row,int col) throws Exception{
+		
+		ExcelutilObject.setExcelFile(excelPath, "Customer");
+		return ExcelutilObject.getCellData(row, col);
+	}
 }

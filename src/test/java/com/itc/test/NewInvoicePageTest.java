@@ -58,14 +58,14 @@ public class NewInvoicePageTest extends BaseTestObject {
 			objNewInvoicePage.clickOnNewInvoice();
 			String fromname =getValFromExcel(2,2);
 		    String fromaddress =getValFromExcel(2,3);
-		    String custname =getValFromExcel(2,4);
+		   // String custname =getValFromExcel(2,4);
 		    String address =getValFromExcel(2,5);
 		    String desc =getValFromExcel(2,6);
 		    String price =getValFromExcel(2,7);
 		    String Itemquan =getValFromExcel(2,8);
 		    String invnotes =getValFromExcel(2,9);
 		    
-			objNewInvoicePage.newInvoiceCreation(fromname, fromaddress, custname, address, desc, price, Itemquan, invnotes);
+			objNewInvoicePage.newInvoiceCreation1(fromname, fromaddress,address, desc, price, Itemquan, invnotes);
 			 objNewInvoicePage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
 			titleflag = objNewInvoicePage.isTitleDisplayed();

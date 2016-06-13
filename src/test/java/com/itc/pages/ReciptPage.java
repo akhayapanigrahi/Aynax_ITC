@@ -80,7 +80,7 @@ public class ReciptPage extends BasePageObject {
 		}
 
 	}
-
+	
 	public boolean isTitleDisplayed() {
 
 		getPageTitle();

@@ -54,7 +54,7 @@ public class EditExpensePageTest extends BaseTestObject {
 			String amount = getValFromExcel(2, 4);
 			String notes = getValFromExcel(2, 5);
 			objEditExpensePage.editExpense(amount, notes);
-			flag1 = objEditExpensePage.isResultPageDisplayed();
+			objEditExpensePage.isResultPageDisplayed();
 			// Assert.assertTrue(flag1);
 			titleflag = objEditExpensePage.isTitleDisplayed();
 

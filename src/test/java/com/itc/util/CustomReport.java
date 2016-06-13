@@ -303,9 +303,9 @@ public String  htmlContents() {
 	/** Starts and defines columns result summary table */
 	private void startResultSummaryTable(String style) {
 		tableStart(style, "summary");
-		m_out.println("<b align=\"center\">Result Summary Table</b>");
-		m_out.println("<tr><th>Class</th>"
-				+ "<th>Method</th><th># of<br>Scenarios</th><th>Start</th><th>Time<br>elapsed</th><th>Custom</th></tr>");
+		m_out.println("<b align=\"center\">Test Result Summary Table</b>");
+		//m_out.println("<tr><th>Class</th>"
+			//	+ "<th>Method</th><th># of<br>Scenarios</th><th>Start</th><th>Time<br>elapsed</th><th>Custom</th></tr>");
 		m_row = 0;
 	}
 
@@ -496,7 +496,7 @@ public String  htmlContents() {
 
 	public void generateSuiteSummaryReport(List<ISuite> suites) throws Exception {
 		printExecutionParameters(suites);
-		m_out.println("<b align=\"center\">Execution Summary</b>");
+		m_out.println("<b align=\"center\">Test Execution Summary</b>");
 		tableStart("testOverview", null);
 		m_out.print("<tr>");
 		tableColumnStart("Test");
@@ -575,7 +575,7 @@ public String  htmlContents() {
 			InputStream input = new FileInputStream(propertyFilePath);
 			prop.load(input);
 			String url = prop.getProperty("url");
-			m_out.println("<b>Environment Details</b>");
+			m_out.println("<b>Test Environment Details</b>");
 			tableStart("testOverview", null);
 			m_out.print("<tr>");
 			tableColumnStart("Suite Name");

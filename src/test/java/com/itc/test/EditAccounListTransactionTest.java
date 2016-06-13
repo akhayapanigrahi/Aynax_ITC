@@ -7,8 +7,6 @@ import com.itc.pages.EditAccountListTransaction;
 import com.itc.util.BaseTestObject;
 import com.itc.util.ExcelutilObject;
 
-import junit.framework.Assert;
-
 
 public class EditAccounListTransactionTest extends BaseTestObject{
 

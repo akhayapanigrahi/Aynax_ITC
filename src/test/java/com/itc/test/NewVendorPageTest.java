@@ -36,8 +36,6 @@ public class NewVendorPageTest extends BaseTestObject{
 	    String address =getValFromExcel(1,3);
 		objNewVendorPage.VendorCreation(vendorName,address);
 	    objNewVendorPage.isResultPageDisplayed();
-	   // AynaxUtil.implicitWait(20);
-	   // Assert.assertTrue(flag1);
 	    titleflag= objNewVendorPage.isTitleDisplayed();
 	    
 	} 
@@ -60,8 +58,6 @@ public class NewVendorPageTest extends BaseTestObject{
 	    
 		objNewVendorPage.VendorCreation(vendorName,address);
 	    objNewVendorPage.isResultPageDisplayed();
-	   // AynaxUtil.implicitWait(20);
-	   // Assert.assertTrue(flag1);
 	    titleflag= objNewVendorPage.isTitleDisplayed();
 	    
 	} 

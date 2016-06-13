@@ -24,7 +24,7 @@ public class ReciptPageTest extends BaseTestObject{
 		login.verifyLoginPage();
 		objReciptPage = new ReciptPage(driver);
 		objReciptPage.clickOnLisRecipt();
-	    objReciptPage.uploadRecipt();;
+	    objReciptPage.uploadRecipt();
 	    flag1=objReciptPage.isResultPageDisplayed();
 	    titleflag= objReciptPage.isTitleDisplayed();
 	    

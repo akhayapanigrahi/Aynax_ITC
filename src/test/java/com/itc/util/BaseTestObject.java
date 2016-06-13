@@ -18,7 +18,7 @@ import org.testng.annotations.Parameters;
 
 public class BaseTestObject {
 
-	protected static WebDriver driver;;
+	protected static WebDriver driver;
 	public static String propertyFilePath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testData.properties";
 	public static String chromeDriverPath = System.getProperty("user.dir")+"\\src\\test\\resources\\drivers\\chromedriver.exe";
 	

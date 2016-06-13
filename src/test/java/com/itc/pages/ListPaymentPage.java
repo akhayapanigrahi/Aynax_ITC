@@ -26,8 +26,6 @@ public class ListPaymentPage extends BasePageObject{
 	
 	By expensesTab = By.xpath(".//*[@id='top-menu']//a[contains(.,'Expenses')]");
 	By listPaymentLink = By.xpath(".//*[@class='hover-menu-parent ']//a[contains(.,'List of Payments')]");
-	By uploadLink=By.linkText("Upload Receipt");
-	By uploadBtn=By.name("uploadfile");
 	By listPaymenttext=By.xpath("//div[@class='page-header']/h1");
 	By errorDialog=By.id("no_vendor");
 

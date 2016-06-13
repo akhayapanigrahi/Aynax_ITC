@@ -1,13 +1,16 @@
 package com.itc.util;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,15 +25,11 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.IInvokedMethod;
 import org.testng.IReporter;
 import org.testng.IResultMap;
@@ -53,8 +52,7 @@ import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
-public class CustomReport implements IReporter 
-{
+public class CustomReport implements IReporter{
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(" MMM d 'at' hh:mm a");
 	private PrintWriter m_out;
 	private int m_row;
@@ -64,176 +62,200 @@ public class CustomReport implements IReporter
 	public static Logger logger = Logger.getLogger(CustomReport.class);
 
 	/**
-	 * This method is the entry point of this class. TestNG calls this listener method to generate the report.
+	 * This method is the entry point of this class. TestNG calls this listener
+	 * method to generate the report.
 	 */
-	public void generateReport( List<XmlSuite> xml, List<ISuite> suites, String outdir ) {
-		Reporter.log( "", true );
-		Reporter.log( "-------------------------------------", true );
-		Reporter.log( "-- Generating test HTML report...  --", true );
-		Reporter.log( "-------------------------------------", true );
-		//Iterating over each suite included in the test
-		for ( ISuite suite : suites ) {
-			//Following code gets the suite name
+	public void generateReport(List<XmlSuite> xml, List<ISuite> suites, String outdir) {
+		Reporter.log("", true);
+		Reporter.log("-------------------------------------", true);
+		Reporter.log("-- Generating test HTML report...  --", true);
+		Reporter.log("-------------------------------------", true);
+		// Iterating over each suite included in the test
+		for (ISuite suite : suites) {
+			// Following code gets the suite name
 			String suiteName = suite.getName();
-			//Getting the results for the said suite
+			// Getting the results for the said suite
 			Map<String, ISuiteResult> suiteResults = suite.getResults();
-			for ( ISuiteResult sr : suiteResults.values() ) {
+			for (ISuiteResult sr : suiteResults.values()) {
 				ITestContext tc = sr.getTestContext();
-				System.out.println( "Passed tests for suite " + suiteName + " is:" + 
-				    tc.getPassedTests().getAllResults().size() );
-				System.out.println( "Failed tests for suite " + suiteName + " is:" + 
-				    tc.getFailedTests().getAllResults().size() );
-				System.out.println( "Skipped tests for suite " + suiteName + " is:" + 
-				    tc.getSkippedTests().getAllResults().size() );
+				System.out.println(
+						"Passed tests for suite " + suiteName + " is:" + tc.getPassedTests().getAllResults().size());
+				System.out.println(
+						"Failed tests for suite " + suiteName + " is:" + tc.getFailedTests().getAllResults().size());
+				System.out.println(
+						"Skipped tests for suite " + suiteName + " is:" + tc.getSkippedTests().getAllResults().size());
 			}
 		}
 		System.out.println();
 		try {
-			m_out = createWriter( outdir );
-		} catch ( IOException e ) {
-			Reporter.log( "Error relating to report output file.", true );
+			m_out = createWriter(outdir);
+		} catch (IOException e) {
+			Reporter.log("Error relating to report output file.", true);
 			e.printStackTrace();
 		}
-		startHtml( m_out );
+		startHtml(m_out);
 		try {
-			generateSuiteSummaryReport( suites );
+			generateSuiteSummaryReport(suites);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		generateMethodSummaryReport( suites );
-		//generateMethodDetailReport( suites );
+		generateMethodSummaryReport(suites);
+		// generateMethodDetailReport( suites );
 		endHtml(m_out);
-		//sendreport();
+		// sendreport();
 		try {
-			List<String> lst=new ArrayList<String>();
-			lst.add("Akshaya.Panigrahi@Itcinfotech.com");
-			
-			//sendMailViaExchnageService("Akshaya.Panigrahi@itcinfotech.com","login@12", "Hello", "Please find the report", lst);
+			List<String> lst = new ArrayList<String>();
+			lst.add("Manjunath.Reddy@apollo.edu");
+			System.out.println("Conetnts are"+htmlContents());
+			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", "Hello",htmlContents(), lst);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		m_out.flush();
-		
+
 		m_out.close();
-		
+
 	}
+public String htmlContents(){
 	
-	protected PrintWriter createWriter( String outdir ) throws IOException {
-		new File( outdir ).mkdirs();
-		return new PrintWriter( new BufferedWriter( new FileWriter( new File( outdir, "AynaxReport.html" ) ) ) );
+	StringBuilder contentBuilder = new StringBuilder();
+	try {
+		FileReader fr=new FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
+	    BufferedReader in = new BufferedReader(fr);
+	    String str=null;
+	    while ((str = in.readLine()) != null) {
+	        contentBuilder.append(str);
+	    }
+	    in.close();
+	} catch (IOException e) {
 	}
+	String content = contentBuilder.toString();
+	return content;
 	
+	
+}
+
+
+	protected PrintWriter createWriter(String outdir) throws IOException {
+		new File(outdir).mkdirs();
+		return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, "AynaxReport.html"))));
+	}
+
 	/**
 	 * Creates a table showing the highlights of each test method with links to
 	 * the method details
 	 */
-	protected void generateMethodSummaryReport( List<ISuite> suites ) {
+	protected void generateMethodSummaryReport(List<ISuite> suites) {
 		m_methodIndex = 0;
-		startResultSummaryTable( "methodOverview" );
+		startResultSummaryTable("methodOverview");
 		int testIndex = 1;
-		for ( ISuite suite : suites ) {
-			if ( suites.size() > 1 ) {
-				titleRow( suite.getName(), 5 );
+		for (ISuite suite : suites) {
+			if (suites.size() > 1) {
+				titleRow(suite.getName(), 5);
 			}
 			Map<String, ISuiteResult> r = suite.getResults();
-			for ( ISuiteResult r2 : r.values() ) {
+			for (ISuiteResult r2 : r.values()) {
 				ITestContext testContext = r2.getTestContext();
 				String testName = testContext.getName();
 				m_testIndex = testIndex;
-				resultSummary( suite, testContext.getFailedConfigurations(), testName, "failed", " (configuration methods)" );
-				resultSummary( suite, testContext.getFailedTests(), testName, "failed", "" );
-				resultSummary( suite, testContext.getSkippedConfigurations(), testName, "skipped", " (configuration methods)" );
-				resultSummary( suite, testContext.getSkippedTests(), testName, "skipped", "" );
-				resultSummary( suite, testContext.getPassedTests(), testName, "passed", "" );
+				resultSummary(suite, testContext.getFailedConfigurations(), testName, "failed",
+						" (configuration methods)");
+				resultSummary(suite, testContext.getFailedTests(), testName, "failed", "");
+				resultSummary(suite, testContext.getSkippedConfigurations(), testName, "skipped",
+						" (configuration methods)");
+				resultSummary(suite, testContext.getSkippedTests(), testName, "skipped", "");
+				resultSummary(suite, testContext.getPassedTests(), testName, "passed", "");
 				testIndex++;
 			}
 		}
 		m_out.println("</table>");
 	}
-	
+
 	/**
-	 *  Creates a section showing known results and console output for each method 
+	 * Creates a section showing known results and console output for each
+	 * method
 	 */
-	protected void generateMethodDetailReport( List<ISuite> suites ) 
-	{
-		Reporter.log("Size of suites: " + suites.size(), true );
+	protected void generateMethodDetailReport(List<ISuite> suites) {
+		Reporter.log("Size of suites: " + suites.size(), true);
 		m_out.println("<br/><b align=\"center\">Method Summaries</b><br/>");
 		m_methodIndex = 0;
-		for ( ISuite suite : suites ) {
+		for (ISuite suite : suites) {
 			m_out.println("<h1>" + suite.getName() + "</h1>");
 			Map<String, ISuiteResult> r = suite.getResults();
-			Reporter.log("Size of suite: " + r.size(), true );
-			for ( ISuiteResult r2 : r.values() ) {
+			Reporter.log("Size of suite: " + r.size(), true);
+			for (ISuiteResult r2 : r.values()) {
 				ITestContext testContext = r2.getTestContext();
-				if ( r.values().size() > 0 ) {
-					m_out.println( "<h3>" + testContext.getName() + "</h3>" );
+				if (r.values().size() > 0) {
+					m_out.println("<h3>" + testContext.getName() + "</h3>");
 				}
-				Reporter.log( "Generating method detail for failed configurations...", true );
-				resultDetail( testContext.getFailedConfigurations() );
-				Reporter.log( "Generating method detail for failed tests...", true );
-				resultDetail( testContext.getFailedTests() );
-				Reporter.log( "Generating method detail for skipped configurations...", true );
-				resultDetail( testContext.getSkippedConfigurations() );
-				Reporter.log( "Generating method detail for skipped tests...", true );
-				resultDetail( testContext.getSkippedTests() );
-				Reporter.log( "Generating method detail for passed tests...", true );
-				resultDetail( testContext.getPassedTests() );
+				Reporter.log("Generating method detail for failed configurations...", true);
+				resultDetail(testContext.getFailedConfigurations());
+				Reporter.log("Generating method detail for failed tests...", true);
+				resultDetail(testContext.getFailedTests());
+				Reporter.log("Generating method detail for skipped configurations...", true);
+				resultDetail(testContext.getSkippedConfigurations());
+				Reporter.log("Generating method detail for skipped tests...", true);
+				resultDetail(testContext.getSkippedTests());
+				Reporter.log("Generating method detail for passed tests...", true);
+				resultDetail(testContext.getPassedTests());
 			}
 		}
 	}
-	
-	public String convertLongToCanonicalLengthOfTime( long timeLength )
-	{		
-		System.out.println("Time passed in is: " + timeLength );
-		if ( timeLength >= 86400000 ) {
-            throw new IllegalArgumentException("Duration must be greater than zero or less than 24 hours!");
-        }
 
-        long hours = TimeUnit.MILLISECONDS.toHours( timeLength );
-        timeLength -= TimeUnit.HOURS.toMillis( hours );
-        long minutes = TimeUnit.MILLISECONDS.toMinutes( timeLength );
-        timeLength -= TimeUnit.MINUTES.toMillis( minutes );
-        long seconds = TimeUnit.MILLISECONDS.toSeconds( timeLength );
+	public String convertLongToCanonicalLengthOfTime(long timeLength) {
+		System.out.println("Time passed in is: " + timeLength);
+		if (timeLength >= 86400000) {
+			throw new IllegalArgumentException("Duration must be greater than zero or less than 24 hours!");
+		}
 
-        StringBuilder sb = new StringBuilder(64);
-        sb.append( hours );
-        sb.append( "h:");
-        sb.append( minutes );
-        sb.append("m:");
-        sb.append( seconds );
-        sb.append("s");
+		long hours = TimeUnit.MILLISECONDS.toHours(timeLength);
+		timeLength -= TimeUnit.HOURS.toMillis(hours);
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(timeLength);
+		timeLength -= TimeUnit.MINUTES.toMillis(minutes);
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(timeLength);
 
-        return( sb.toString() );
+		StringBuilder sb = new StringBuilder(64);
+		sb.append(hours);
+		sb.append("h:");
+		sb.append(minutes);
+		sb.append("m:");
+		sb.append(seconds);
+		sb.append("s");
+
+		return (sb.toString());
 	}
-	
+
 	/**
 	 * 
 	 * @param tests
 	 */
-	private void resultSummary( ISuite suite, IResultMap tests, String testname, String style, String details ) 
-	{
-		if ( tests.getAllResults().size() > 0 ) {
+	private void resultSummary(ISuite suite, IResultMap tests, String testname, String style, String details) {
+		if (tests.getAllResults().size() > 0) {
 			StringBuffer buff = new StringBuffer();
 			String lastClassName = "";
 			int mq = 0;
 			int cq = 0;
-			for ( ITestNGMethod method : getMethodSet( tests, suite ) ) {
+			for (ITestNGMethod method : getMethodSet(tests, suite)) {
 				m_row += 1;
 				m_methodIndex += 1;
 				ITestClass testClass = method.getTestClass();
 				String className = testClass.getName();
-				if ( mq == 0 ) {
-					String id = ( m_testIndex == null ? null : "t" + Integer.toString( m_testIndex ) );
-					titleRow( testname + " — " + style + details, 6, id );  // sets width of 'Tests -- Passed' row
+				if (mq == 0) {
+					String id = (m_testIndex == null ? null : "t" + Integer.toString(m_testIndex));
+					titleRow(testname + " — " + style + details, 6, id); // sets
+																			// width
+																			// of
+																			// 'Tests
+																			// --
+																			// Passed'
+																			// row
 					m_testIndex = null;
 				}
-				if ( !className.equalsIgnoreCase( lastClassName ) ) {
+				if (!className.equalsIgnoreCase(lastClassName)) {
 					if (mq > 0) {
 						cq += 1;
-						m_out.print("<tr class=\"" + style + (cq % 2 == 0 ? "even" : "odd") + "\">"	+ "<td");
-						if ( mq > 1 ) {
+						m_out.print("<tr class=\"" + style + (cq % 2 == 0 ? "even" : "odd") + "\">" + "<td");
+						if (mq > 1) {
 							m_out.print(" rowspan=\"" + mq + "\"");
 						}
 						m_out.println(">" + lastClassName + "</td>" + buff);
@@ -245,34 +267,32 @@ public class CustomReport implements IReporter
 				Set<ITestResult> resultSet = tests.getResults(method);
 				long end = Long.MIN_VALUE;
 				long start = Long.MAX_VALUE;
-				for ( ITestResult testResult : tests.getResults( method ) ) {
-					if ( testResult.getEndMillis() > end ) {
+				for (ITestResult testResult : tests.getResults(method)) {
+					if (testResult.getEndMillis() > end) {
 						end = testResult.getEndMillis();
 					}
-					if ( testResult.getStartMillis() < start ) {
+					if (testResult.getStartMillis() < start) {
 						start = testResult.getStartMillis();
 					}
 				}
 				mq += 1;
-				if ( mq > 1 ) {
+				if (mq > 1) {
 					buff.append("<tr class=\"" + style + (cq % 2 == 0 ? "odd" : "even") + "\">");
 				}
 				Date d = new Date(start);
-				String formattedDate = dateFormatter.format( d );
+				String formattedDate = dateFormatter.format(d);
 				String description = method.getDescription();
-				String testInstanceName = resultSet.toArray( new ITestResult[] { } )[0].getTestName();
-				buff.append("<td><a href=\"#m" + m_methodIndex + "\">" + qualifiedName(method)
-						+ " " + (description != null && description.length() > 0 ? "(\""
-								+ description + "\")" : "") + "</a>" + (null == testInstanceName ? "" : "<br>("
-										+ testInstanceName + ")") + "</td>" + "<td class=\"numi\">" + resultSet.size() 
-										+ "</td>" + "<td>" + formattedDate + "</td>" + "<td class=\"numi\">"
-										+ convertLongToCanonicalLengthOfTime(end - start) + "</td>" 
-										+ "<td><a href='emailable-report.html'>Test</a></td></tr>");
+				String testInstanceName = resultSet.toArray(new ITestResult[] {})[0].getTestName();
+				buff.append("<td><a href=\"#m" + m_methodIndex + "\">" + qualifiedName(method) + " "
+						+ (description != null && description.length() > 0 ? "(\"" + description + "\")" : "") + "</a>"
+						+ (null == testInstanceName ? "" : "<br>(" + testInstanceName + ")") + "</td>"
+						+ "<td class=\"numi\">" + resultSet.size() + "</td>" + "<td>" + formattedDate + "</td>"
+						+ "<td class=\"numi\">" + convertLongToCanonicalLengthOfTime(end - start) + "</td>"
+						+ "<td><a href='emailable-report.html'>Test</a></td></tr>");
 			}
 			if (mq > 0) {
 				cq += 1;
-				m_out.print("<tr class=\"" + style
-						+ (cq % 2 == 0 ? "even" : "odd") + "\">" + "<td");
+				m_out.print("<tr class=\"" + style + (cq % 2 == 0 ? "even" : "odd") + "\">" + "<td");
 				if (mq > 1) {
 					m_out.print(" rowspan=\"" + mq + "\"");
 				}
@@ -280,16 +300,16 @@ public class CustomReport implements IReporter
 			}
 		}
 	}
-	
+
 	/** Starts and defines columns result summary table */
-	private void startResultSummaryTable( String style ) {
-		tableStart( style, "summary");
+	private void startResultSummaryTable(String style) {
+		tableStart(style, "summary");
 		m_out.println("<b align=\"center\">Result Summary Table</b>");
 		m_out.println("<tr><th>Class</th>"
 				+ "<th>Method</th><th># of<br>Scenarios</th><th>Start</th><th>Time<br>elapsed</th><th>Custom</th></tr>");
 		m_row = 0;
 	}
-	
+
 	private String qualifiedName(ITestNGMethod method) {
 		StringBuilder addon = new StringBuilder();
 		String[] groups = method.getGroups();
@@ -306,46 +326,45 @@ public class CustomReport implements IReporter
 		}
 		return "<b>" + method.getMethodName() + "</b> " + addon;
 	}
-	
+
 	/**
-	 * Called by method generateMethodDetailReport 
+	 * Called by method generateMethodDetailReport
+	 * 
 	 * @param tests
 	 */
-	private void resultDetail( IResultMap tests ) {
-		if ( tests.size() > 0 ) {
-		        for ( ITestResult result : tests.getAllResults() ) {
-			    ITestNGMethod method = result.getMethod();
-			    m_methodIndex++;
-			    String cname = method.getTestClass().getName();
-			    m_out.println("<h2 id=\"m" + m_methodIndex + "\">" + cname + " : " + method.getMethodName() + "</h2>");
-			    Set<ITestResult> resultSet = tests.getResults( method );
-			    generateForResult( result, method, resultSet.size() );
-			    m_out.println("<p class=\"totop\"><a href=\"#summary\">back to summary</a></p>");
-		    }
+	private void resultDetail(IResultMap tests) {
+		if (tests.size() > 0) {
+			for (ITestResult result : tests.getAllResults()) {
+				ITestNGMethod method = result.getMethod();
+				m_methodIndex++;
+				String cname = method.getTestClass().getName();
+				m_out.println("<h2 id=\"m" + m_methodIndex + "\">" + cname + " : " + method.getMethodName() + "</h2>");
+				Set<ITestResult> resultSet = tests.getResults(method);
+				generateForResult(result, method, resultSet.size());
+				m_out.println("<p class=\"totop\"><a href=\"#summary\">back to summary</a></p>");
+			}
 		} else {
-			Reporter.log( "Result map was empty.", true );
+			Reporter.log("Result map was empty.", true);
 		}
 	}
-	
+
 	/**
 	 * Write the first line of the stack trace
 	 *
 	 * @param tests
 	 */
 	@SuppressWarnings("unused")
-	private void getShortException( IResultMap tests ) {
-		for ( ITestResult result : tests.getAllResults() ) {
+	private void getShortException(IResultMap tests) {
+		for (ITestResult result : tests.getAllResults()) {
 			m_methodIndex++;
 			Throwable exception = result.getThrowable();
-			List<String> msgs = Reporter.getOutput( result );
+			List<String> msgs = Reporter.getOutput(result);
 			boolean hasReporterOutput = msgs.size() > 0;
 			boolean hasThrowable = exception != null;
 			if (hasThrowable) {
 				boolean wantsMinimalOutput = result.getStatus() == ITestResult.SUCCESS;
 				if (hasReporterOutput) {
-					m_out.print("<h3>"
-							+ (wantsMinimalOutput ? "Expected Exception"
-									: "Failure") + "</h3>");
+					m_out.print("<h3>" + (wantsMinimalOutput ? "Expected Exception" : "Failure") + "</h3>");
 				}
 				// Getting first line of the stack trace
 				String str = Utils.stackTrace(exception, true)[0];
@@ -355,85 +374,83 @@ public class CustomReport implements IReporter
 			}
 		}
 	}
-	
+
 	/**
 	 * Write all parameters
 	 *
 	 * @param tests
 	 */
 	@SuppressWarnings("unused")
-	private void getParameters( IResultMap tests ) {
+	private void getParameters(IResultMap tests) {
 		for (ITestResult result : tests.getAllResults()) {
 			m_methodIndex++;
 			Object[] parameters = result.getParameters();
 			boolean hasParameters = parameters != null && parameters.length > 0;
 			if (hasParameters) {
 				for (Object p : parameters) {
-					m_out.println(Utils.escapeHtml(org.testng.internal.Utils
-							.toString(p, String.class)) + " | ");
+					m_out.println(Utils.escapeHtml(org.testng.internal.Utils.toString(p, String.class)) + " | ");
 				}
 			}
 		}
 	}
-	
+
 	/**
-	 * Called by resultDetail method to show detailed information about each test
-	 * including the console log.
+	 * Called by resultDetail method to show detailed information about each
+	 * test including the console log.
+	 * 
 	 * @param ans
 	 * @param method
 	 * @param resultSetSize
 	 */
-	private void generateForResult( ITestResult ans, ITestNGMethod method, int resultSetSize ) {
+	private void generateForResult(ITestResult ans, ITestNGMethod method, int resultSetSize) {
 		Object[] parameters = ans.getParameters();
 		boolean hasParameters = parameters != null && parameters.length > 0;
 		tableStart("result", null);
-		if ( hasParameters ) {
-			
+		if (hasParameters) {
+
 			m_out.print("<tr class=\"param\">");
-			for ( int x = 1; x <= parameters.length; x++ ) {
+			for (int x = 1; x <= parameters.length; x++) {
 				m_out.print("<th>Param." + x + "</th>");
 			}
 			m_out.println("</tr>");
 			m_out.print("<tr class=\"param stripe\">");
 			for (Object p : parameters) {
-				m_out.println("<td>"
-						+ Utils.escapeHtml(Utils.toString(p, String.class))
-						+ "</td>");
+				m_out.println("<td>" + Utils.escapeHtml(Utils.toString(p, String.class)) + "</td>");
 			}
 			m_out.println("</tr>");
 		} else {
 			m_out.println("<tr><td><i>Test did not have parameters.</i></td></tr> ");
 		}
-		List<String> msgs = Reporter.getOutput( ans );
+		List<String> msgs = Reporter.getOutput(ans);
 		boolean hasReporterOutput = msgs.size() > 0;
 		Throwable exception = ans.getThrowable();
 		boolean hasThrowable = exception != null;
-		if ( hasReporterOutput || hasThrowable ) {
-			if ( hasParameters ) {
-				m_out.print( "<tr><td" );
-				if ( parameters.length > 1 ) {
-					m_out.print( " colspan=\"" + parameters.length + "\"");
+		if (hasReporterOutput || hasThrowable) {
+			if (hasParameters) {
+				m_out.print("<tr><td");
+				if (parameters.length > 1) {
+					m_out.print(" colspan=\"" + parameters.length + "\"");
 				}
-				m_out.println( ">" );
+				m_out.println(">");
 			} else {
-				m_out.println( "<div>" );
+				m_out.println("<div>");
 			}
-			if ( hasReporterOutput ) {
-				if ( hasThrowable ) {
-					m_out.println( "<h3>Test Messages</h3>" );
+			if (hasReporterOutput) {
+				if (hasThrowable) {
+					m_out.println("<h3>Test Messages</h3>");
 				}
-				for ( String line : msgs ) {
+				for (String line : msgs) {
 					m_out.println(line + "<br>");
 				}
 			}
-			if ( hasThrowable ) {
+			if (hasThrowable) {
 				boolean wantsMinimalOutput = ans.getStatus() == ITestResult.SUCCESS;
-				if ( hasReporterOutput ) {
-					m_out.println( "<h3>" + ( wantsMinimalOutput ? "Expected Exception" : "Failure") + "</h3>" );
+				if (hasReporterOutput) {
+					m_out.println("<h3>" + (wantsMinimalOutput ? "Expected Exception" : "Failure") + "</h3>");
 				}
 				generateExceptionReport(exception, method);
 			}
-			if ( hasParameters ) {
+			if (hasParameters) {
 				m_out.println("</td></tr>");
 			} else {
 				m_out.println("</div>");
@@ -443,13 +460,13 @@ public class CustomReport implements IReporter
 		}
 		m_out.println("</table>");
 	}
-	
-	protected void generateExceptionReport(Throwable exception,	ITestNGMethod method) {
+
+	protected void generateExceptionReport(Throwable exception, ITestNGMethod method) {
 		m_out.print("<div class=\"stacktrace\">");
 		m_out.print(Utils.stackTrace(exception, true)[0]);
 		m_out.println("</div>");
 	}
-	
+
 	/**
 	 * Since the methods will be sorted chronologically, we want to return the
 	 * ITestNGMethod from the invoked methods.
@@ -477,10 +494,8 @@ public class CustomReport implements IReporter
 		}
 		return result;
 	}
-	
-	
-	
-	public void generateSuiteSummaryReport( List<ISuite> suites ) throws Exception {
+
+	public void generateSuiteSummaryReport(List<ISuite> suites) throws Exception {
 		printExecutionParameters(suites);
 		m_out.println("<b align=\"center\">Execution Summary</b>");
 		tableStart("testOverview", null);
@@ -503,133 +518,138 @@ public class CustomReport implements IReporter
 		long testStart;
 		long testEnd;
 		m_testIndex = 1;
-        if ( suites.size() == 0 ) throw new TestNGException( "You need to have at lease one suite to generate a report.");
-        for ( ISuite suite : suites ) {
-			titleRow( suite.getName(), 8 );
+		if (suites.size() == 0)
+			throw new TestNGException("You need to have at lease one suite to generate a report.");
+		for (ISuite suite : suites) {
+			titleRow(suite.getName(), 8);
 			Map<String, ISuiteResult> tests = suite.getResults();
-			for ( ISuiteResult r : tests.values() ) {
+			for (ISuiteResult r : tests.values()) {
 				qty_tests += 1;
 				ITestContext overview = r.getTestContext();
-				startSummaryRow( overview.getName() );
-				int q = getMethodSet( overview.getPassedTests(), suite ).size();
+				startSummaryRow(overview.getName());
+				int q = getMethodSet(overview.getPassedTests(), suite).size();
 				qty_pass_m += q;
-				summaryCell( q, Integer.MAX_VALUE );
+				summaryCell(q, Integer.MAX_VALUE);
 				q = overview.getPassedTests().size();
 				qty_pass_s += q;
-				summaryCell( q, Integer.MAX_VALUE );
+				summaryCell(q, Integer.MAX_VALUE);
 				q = getMethodSet(overview.getSkippedTests(), suite).size();
 				qty_skip += q;
 				summaryCell(q, 0);
-				q = getMethodSet( overview.getFailedTests(), suite ).size();
+				q = getMethodSet(overview.getFailedTests(), suite).size();
 				qty_fail += q;
 				summaryCell(q, 0);
 				testStart = overview.getStartDate().getTime();
 				testEnd = overview.getEndDate().getTime();
-				String passedTime = convertLongToCanonicalLengthOfTime( testEnd - testStart );
-				summaryCell( passedTime, true );
-				summaryCell( overview.getIncludedGroups() );
-				summaryCell( overview.getExcludedGroups() );
+				String passedTime = convertLongToCanonicalLengthOfTime(testEnd - testStart);
+				summaryCell(passedTime, true);
+				summaryCell(overview.getIncludedGroups());
+				summaryCell(overview.getExcludedGroups());
 				m_out.println("</tr>");
 				m_testIndex++;
 			}
 			m_out.println("<tr class=\"total\"><td>Total</td>");
-			summaryCell( qty_pass_m, Integer.MAX_VALUE );
-			summaryCell( qty_pass_s, Integer.MAX_VALUE );
-			summaryCell( qty_skip, 0 );
-			summaryCell( qty_fail, 0 );
-			//String passedTime = convertLongToCanonicalLengthOfTime( testEnd - testStart );
-			summaryCell( "9999", true); //TODO fix this
+			summaryCell(qty_pass_m, Integer.MAX_VALUE);
+			summaryCell(qty_pass_s, Integer.MAX_VALUE);
+			summaryCell(qty_skip, 0);
+			summaryCell(qty_fail, 0);
+			// String passedTime = convertLongToCanonicalLengthOfTime( testEnd -
+			// testStart );
+			summaryCell("9999", true); // TODO fix this
 			m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
-		    m_out.println("</table>");
-		    m_out.println("<p></p>");
+			m_out.println("</table>");
+			m_out.println("<p></p>");
 		}
 	}
-	
-	private void printExecutionParameters( List<ISuite> suites) throws Exception {
-		for ( ISuite suite : suites ) {
+
+	private void printExecutionParameters(List<ISuite> suites) throws Exception {
+		
+		for (ISuite suite : suites) {
 			String suiteName = suite.getName();
-			String browser=suite.getParameter("browserType");
+			Capabilities caps = ((RemoteWebDriver)BaseTestObject.driver).getCapabilities();
+			String browsername = caps.getBrowserName();
+			String browserVersion=caps.getVersion();
+			String OS =caps.getPlatform().toString();
 			Properties prop = new Properties();
-			String propertyFilePath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testData.properties";
+			String propertyFilePath = System.getProperty("user.dir")
+					+ "\\src\\test\\resources\\testdata\\testData.properties";
 			InputStream input = new FileInputStream(propertyFilePath);
 			prop.load(input);
-			 String url = prop.getProperty("url");
-			 String browserVersion=prop.getProperty("browserVersion");
-			 String OS=prop.getProperty("OS");
-			 
-		m_out.println("<b>Environment Details</b>");
-		tableStart("testOverview", null);
-		m_out.print("<tr>");
-		tableColumnStart("Suite Name");
-		tableColumnStart("BaseUrl");
-		tableColumnStart("OSType");
-		tableColumnStart("Browser");
-		tableColumnStart("BrowserVersion");
-		
-		m_out.println("</tr>");
-		summaryCell( suiteName, true );
-		summaryCell( url, true );
-		summaryCell( OS, true );
-		summaryCell( browser, true );
-		summaryCell( browserVersion, true );
-		
-		m_out.println("</table>");
-		m_out.println("<p></p>");
+			String url = prop.getProperty("url");
+			m_out.println("<b>Environment Details</b>");
+			tableStart("testOverview", null);
+			m_out.print("<tr>");
+			tableColumnStart("Suite Name");
+			tableColumnStart("BaseUrl");
+			tableColumnStart("OSType");
+			tableColumnStart("Browser");
+			tableColumnStart("BrowserVersion");
+
+			m_out.println("</tr>");
+			summaryCell(suiteName, true);
+			summaryCell(url, true);
+			summaryCell(OS, true);
+			summaryCell(browsername, true);
+			summaryCell(browserVersion, true);
+
+			m_out.println("</table>");
+			m_out.println("<p></p>");
 		}
-		
+
 	}
-	
-	private void summaryCell( String[] val ) {
+	 
+
+	private void summaryCell(String[] val) {
 		StringBuffer b = new StringBuffer();
-		for ( String v : val ) {
-			b.append( v + " " );
+		for (String v : val) {
+			b.append(v + " ");
 		}
-		summaryCell( b.toString(), true );
+		summaryCell(b.toString(), true);
 	}
-	
-	private void summaryCell( String v, boolean isgood ) {
+
+	private void summaryCell(String v, boolean isgood) {
 		m_out.print("<td class=\"numi" + (isgood ? "" : "_attn") + "\">" + v + "</td>");
 	}
-	
+
 	private void startSummaryRow(String label) {
 		m_row += 1;
-		m_out.print("<tr"
-				+ (m_row % 2 == 0 ? " class=\"stripe\"" : "")
-				+ "><td style=\"text-align:left;padding-right:2em\"><a href=\"#t"
-				+ m_testIndex + "\">" + label + "</a>" + "</td>");
+		m_out.print("<tr" + (m_row % 2 == 0 ? " class=\"stripe\"" : "")
+				+ "><td style=\"text-align:left;padding-right:2em\"><a href=\"#t" + m_testIndex + "\">" + label + "</a>"
+				+ "</td>");
 	}
-	
-	private void summaryCell( int v, int maxexpected ) {
-		summaryCell( String.valueOf(v), v <= maxexpected );
+
+	private void summaryCell(int v, int maxexpected) {
+		summaryCell(String.valueOf(v), v <= maxexpected);
 	}
-	
-	private void tableStart( String cssclass, String id ) {
-		m_out.println( "<table cellspacing=\"0\" cellpadding=\"0\""
-				+ (cssclass != null ? " class=\"" + cssclass + "\""	: " style=\"padding-bottom:2em\"")
-				+ (id != null ? " id=\"" + id + "\"" : "") + ">" );
+
+	private void tableStart(String cssclass, String id) {
+		m_out.println("<table cellspacing=\"0\" cellpadding=\"0\""
+				+ (cssclass != null ? " class=\"" + cssclass + "\"" : " style=\"padding-bottom:2em\"")
+				+ (id != null ? " id=\"" + id + "\"" : "") + ">");
 		m_row = 0;
 	}
-	
+
 	private void tableColumnStart(String label) {
-		m_out.print( "<th>" + label + "</th>" );
+		m_out.print("<th>" + label + "</th>");
 	}
-	
-	private void titleRow( String label, int cq ) {
-		titleRow( label, cq, null );
+
+	private void titleRow(String label, int cq) {
+		titleRow(label, cq, null);
 	}
-	
-	private void titleRow( String label, int cq, String id ) {
+
+	private void titleRow(String label, int cq, String id) {
 		m_out.print("<tr");
-		if ( id != null ) {
+		if (id != null) {
 			m_out.print(" id=\"" + id + "\"");
 		}
 		m_out.println("><th colspan=\"" + cq + "\">" + label + "</th></tr>");
 		m_row = 0;
 	}
-	
+
 	/** Starts HTML stream */
 	protected void startHtml(PrintWriter out) {
-		out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">");
+		out.println(
+				"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">");
 		out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
 		out.println("<head>");
 		out.println("<title>Aynax Automation Execution Report</title>");
@@ -656,7 +676,7 @@ public class CustomReport implements IReporter
 	}
 
 	/** Finishes HTML stream */
-	protected void endHtml( PrintWriter out ) {
+	protected void endHtml(PrintWriter out) {
 		out.println("<center><h4>===Customized TestNG Report===</h4></center>");
 		out.println("</body></html>");
 	}
@@ -679,89 +699,62 @@ public class CustomReport implements IReporter
 		// return r;
 	}
 
-	public void sendreport(){
-		
-		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465");
-		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
-		Session session = Session.getDefaultInstance(props,
-		new javax.mail.Authenticator() {
-		protected PasswordAuthentication getPasswordAuthentication() {
-		return new PasswordAuthentication("akshaya.panigrahi85@gmail.com","hiwelcome");
-		}
-		});
-		try {
-			String htmlPath = System.getProperty("user.dir")+"\\test-output\\AynaxReport.html";
-			String fromMail="akshaya.panigrahi85@gmail.com";
-			String toMail="Akshaya.Panigrahi@itcinfotech.com";
-			 MimeMessage message = new MimeMessage(session); 
-			 
-		       message.setFrom(new InternetAddress(fromMail));  
-		       message.addRecipient(Message.RecipientType.TO,  
-		                                new InternetAddress(toMail));  
+	/*
+	 * public void sendreport(){
+	 * 
+	 * Properties props = new Properties(); props.put("mail.smtp.host",
+	 * "smtp.gmail.com"); props.put("mail.smtp.socketFactory.port", "465");
+	 * props.put("mail.smtp.socketFactory.class",
+	 * "javax.net.ssl.SSLSocketFactory"); props.put("mail.smtp.auth", "true");
+	 * props.put("mail.smtp.port", "465"); Session session =
+	 * Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+	 * protected PasswordAuthentication getPasswordAuthentication() { return new
+	 * PasswordAuthentication("akshaya.panigrahi85@gmail.com","hiwelcome"); }
+	 * }); try { String htmlPath =
+	 * System.getProperty("user.dir")+"\\test-output\\AynaxReport.html"; String
+	 * fromMail="akshaya.panigrahi85@gmail.com"; String
+	 * toMail="Akshaya.Panigrahi@itcinfotech.com"; MimeMessage message = new
+	 * MimeMessage(session);
+	 * 
+	 * message.setFrom(new InternetAddress(fromMail));
+	 * message.addRecipient(Message.RecipientType.TO, new
+	 * InternetAddress(toMail));
+	 * 
+	 * message.setSubject("HTML Message");
+	 * 
+	 * message.setContent(htmlPath,"text/html" ); Transport.send(message);
+	 * System.out.println("message sent...."); } catch (MessagingException ex) {
+	 * throw new RuntimeException(ex); } }
+	 */
 
-		      message.setSubject("HTML Message"); 
-		      
-		      message.setContent(htmlPath,"text/html" );  
-		     Transport.send(message);  
-		       System.out.println("message sent....");
-	       System.out.println("message sent....");
-		} catch (MessagingException ex) {
-		throw new RuntimeException(ex);
+	public void sendMailViaExchnageService(String username, String password, String subject, String body,
+			List<String> toAddressList) throws Exception {
+		
+		logger.info("Mail sending Inprogress...");
+		ExchangeService service;
+
+		service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
+		ExchangeCredentials credentials = new WebCredentials(username, password);
+		service.setCredentials(credentials);
+		try {
+			service.setUrl(new URI("https://outlook.office365.com/EWS/Exchange.asmx"));
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		EmailMessage msg;
+		try {
+			
+			msg = new EmailMessage(service);
+			msg.setSubject(subject);
+			msg.setBody(MessageBody.getMessageBodyFromText(body));
+			Iterator<String> mailList = toAddressList.iterator();
+			msg.getToRecipients().addSmtpAddressRange(mailList);
+			
+			msg.send();
+			logger.info("Mail sending Success...Please check your inbox");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-/*public void sendreport1(){
-	String htmlPath = System.getProperty("user.dir")+"\\test-output\\CustomReport.html";
-
-	String host="smtp.gmail.com"; 
-    String to="Akshaya.Panigrahi@itcinfotech.com";  
-    final String user="akshaya.panigrahi85@gmail.com"; 
-    final String password="hiwelcome";  
-
-    Properties properties = System.getProperties();  
-    properties.setProperty("mail.smtp.host",host);  
-    properties.put("mail.smtp.auth", "true");  
-
-    Session session = Session.getDefaultInstance(properties,  
-  new javax.mail.Authenticator() {  
-   protected PasswordAuthentication getPasswordAuthentication() {  
-    return new PasswordAuthentication(user,password);  
-   }  
-    });  
-      
-    try{  
-       MimeMessage message = new MimeMessage(session);  
-       message.setFrom(new InternetAddress(user));  
-       message.addRecipient(Message.RecipientType.TO,  
-                                new InternetAddress(to));  
-
-      message.setSubject("HTML Message");  
-      message.setContent(htmlPath,"text/html" );  
-  
-     Transport.send(message);  
-       System.out.println("message sent....");  
-    }catch (MessagingException ex) {ex.printStackTrace();}  
- }  
-}*/
-	public void sendMailViaExchnageService(String username, String password, String subject, String body, List<String> toAddressList) throws Exception {
-		 
-        logger.info("Mail sending Inprogress...");
-        ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-        ExchangeCredentials credentials = new WebCredentials(username, password);
-        service.setCredentials(credentials);
-        service.setUrl(new URI("https://outlook.office365.com/EWS/Exchange.asmx"));
-        EmailMessage msg = new EmailMessage(service);
-        msg.setSubject(subject);
-        msg.setBody(MessageBody.getMessageBodyFromText(body));
-        Iterator<String> mailList = toAddressList.iterator();
-        msg.getToRecipients().addSmtpAddressRange(mailList);
-        msg.send();
-        logger.info("Mail sending Success...Please check your inbox");
-
- }
 }
-
-

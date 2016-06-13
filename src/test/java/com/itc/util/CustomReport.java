@@ -286,8 +286,8 @@ public String  htmlContents() {
 						+ (description != null && description.length() > 0 ? "(\"" + description + "\")" : "") + "</a>"
 						+ (null == testInstanceName ? "" : "<br>(" + testInstanceName + ")") + "</td>"
 						+ "<td class=\"numi\">" + resultSet.size() + "</td>" + "<td>" + formattedDate + "</td>"
-						+ "<td class=\"numi\">" + convertLongToCanonicalLengthOfTime(end - start) + "</td>"
-						+ "<td><a href='emailable-report.html'>Test</a></td></tr>");
+						+ "<td class=\"numi\">" + convertLongToCanonicalLengthOfTime(end - start) + "</td>");
+						//+ "<td><a href='emailable-report.html'></a></td></tr>");
 			}
 			if (mq > 0) {
 				cq += 1;
@@ -676,7 +676,7 @@ public String  htmlContents() {
 
 	/** Finishes HTML stream */
 	protected void endHtml(PrintWriter out) {
-		out.println("<center><h4>===Customized TestNG Report===</h4></center>");
+		out.println("<center><h4>=Customized TestNG Report=</h4></center>");
 		out.println("</body></html>");
 	}
 

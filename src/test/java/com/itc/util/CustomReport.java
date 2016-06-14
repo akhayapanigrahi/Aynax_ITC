@@ -3,7 +3,6 @@ package com.itc.util;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,19 +48,24 @@ import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
-public class CustomReport implements IReporter{
+public class CustomReport implements IReporter {
+
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(" MMM d 'at' hh:mm a");
 	private PrintWriter m_out;
 	private int m_row;
 	private Integer m_testIndex;
 	private int m_methodIndex;
 	private Scanner scanner;
+	//private  ITestContext itContext;
 	public static Logger logger = Logger.getLogger(CustomReport.class);
+	private String report = System.getProperty("user.dir") + "\\test-output\\emailablereport.html";
+	private StringBuffer sb = new StringBuffer();
 
 	/**
 	 * This method is the entry point of this class. TestNG calls this listener
 	 * method to generate the report.
 	 */
+		
 	public void generateReport(List<XmlSuite> xml, List<ISuite> suites, String outdir) {
 		Reporter.log("", true);
 		Reporter.log("-------------------------------------", true);
@@ -85,6 +89,13 @@ public class CustomReport implements IReporter{
 		}
 		System.out.println();
 		try {
+			reportContent(suites);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
 			m_out = createWriter(outdir);
 		} catch (IOException e) {
 			Reporter.log("Error relating to report output file.", true);
@@ -102,11 +113,13 @@ public class CustomReport implements IReporter{
 		try {
 			List<String> lst = new ArrayList<String>();
 			lst.add("Manjunath.Reddy@apollo.edu");
-			FileReader reader = new FileReader
-			          ("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
-			
-			//System.out.println("Conetents are" + htmlContents());
-			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", "Hello",htmlContents(reader), lst);
+			// FileReader reader = new
+			// FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
+			for (ISuite suite : suites) {
+				String suiteName = suite.getName();
+				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", suiteName + " Report",
+						sb.toString(), lst);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,25 +128,20 @@ public class CustomReport implements IReporter{
 		m_out.close();
 
 	}
-public String  htmlContents() {
-	
-	
-	/*StringBuilder contentBuilder = new StringBuilder();
-	try {
-		FileReader fr=new FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
-	    BufferedReader in = new BufferedReader(fr);
-	    String str=null;
-	    while ((str = in.readLine()) != null) {
-	        contentBuilder.append(str);
-	    }
-	    in.close();
-	} catch (IOException e) {
-	}*/
-	return null;
-}
-	
 
+	private void reportContent(List<ISuite> suites) throws Exception {
 
+		sb.append(
+				"<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title>TestNG:  Unit Test</title><style type=\"text/css\">table caption,table.info_table,table.param,table.passed,table.failed {margin-bottom:10px;border:1px solid #000099;border-collapse:collapse;empty-cells:show;}table.info_table td,table.info_table th,table.param td,table.param th,table.passed td,table.passed th,table.failed td,table.failed th {border:1px solid #000099;padding:.25em .5em .25em .5em}table.param th {vertical-align:bottom}td.numi,th.numi,td.numi_attn {text-align:center}tr.total td {font-weight:bold}table caption {text-align:center;font-weight:bold;}table.passed tr.stripe td,table tr.passedodd td {background-color: #00AA00;}table.passed td,table tr.passedeven td {background-color: #33FF33;}table.passed tr.stripe td,table tr.skippedodd td {background-color: #cccccc;}table.passed td,table tr.skippedodd td {background-color: #dddddd;}table.failed tr.stripe td,table tr.failedodd td,table.param td.numi_attn {background-color: #FF3333;}table.failed td,table tr.failedeven td,table.param tr.stripe td.numi_attn {background-color: #DD0000;}tr.stripe td,tr.stripe th {background-color: #E6EBF9;}p.totop {font-size:85%;text-align:center;border-bottom:2px black solid}div.shootout {padding:2em;border:3px #4854A8 solid}</style></head><body>");
+		sb.append("Hi Everybody,");
+		for (ISuite suite : suites) {
+			String suiteName = suite.getName();
+			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
+			sb.append(printEnvironmentDetails(suites));
+			sb.append(printTestExecutionSummary(suites));
+			sb.append("</body></html>");
+		}
+	}
 
 	protected PrintWriter createWriter(String outdir) throws IOException {
 		new File(outdir).mkdirs();
@@ -241,13 +249,6 @@ public String  htmlContents() {
 				String className = testClass.getName();
 				if (mq == 0) {
 					String id = (m_testIndex == null ? null : "t" + Integer.toString(m_testIndex));
-					titleRow(testname + " — " + style + details, 6, id); // sets
-																			// width
-																			// of
-																			// 'Tests
-																			// --
-																			// Passed'
-																			// row
 					m_testIndex = null;
 				}
 				if (!className.equalsIgnoreCase(lastClassName)) {
@@ -287,7 +288,7 @@ public String  htmlContents() {
 						+ (null == testInstanceName ? "" : "<br>(" + testInstanceName + ")") + "</td>"
 						+ "<td class=\"numi\">" + resultSet.size() + "</td>" + "<td>" + formattedDate + "</td>"
 						+ "<td class=\"numi\">" + convertLongToCanonicalLengthOfTime(end - start) + "</td>");
-						//+ "<td><a href='emailable-report.html'></a></td></tr>");
+				// + "<td><a href='emailable-report.html'></a></td></tr>");
 			}
 			if (mq > 0) {
 				cq += 1;
@@ -304,8 +305,9 @@ public String  htmlContents() {
 	private void startResultSummaryTable(String style) {
 		tableStart(style, "summary");
 		m_out.println("<b align=\"center\">Test Result Summary Table</b>");
-		//m_out.println("<tr><th>Class</th>"
-			//	+ "<th>Method</th><th># of<br>Scenarios</th><th>Start</th><th>Time<br>elapsed</th><th>Custom</th></tr>");
+		// m_out.println("<tr><th>Class</th>"
+		// + "<th>Method</th><th>#
+		// of<br>Scenarios</th><th>Start</th><th>Time<br>elapsed</th><th>Custom</th></tr>");
 		m_row = 0;
 	}
 
@@ -494,6 +496,25 @@ public String  htmlContents() {
 		return result;
 	}
 
+	public String getTableDetails(String pagesource) throws IOException, URISyntaxException {
+		StringBuffer strBuf = new StringBuffer();
+
+		String strTemp = pagesource.split("</table>")[1];
+
+		int index = strTemp.indexOf("<table cellspacing=\"0\" cellpadding=\"0\" class=\"param\">");
+		if (index == -1) {
+			strTemp = pagesource.split("</table>")[0];
+			index = strTemp.indexOf("<table cellspacing=\"0\" cellpadding=\"0\" class=\"param\">");
+		}
+		strTemp = strTemp.substring(index);
+
+		strBuf.append(strTemp);
+		strBuf.append("</table>");
+
+		return strBuf.toString();
+
+	}
+
 	public void generateSuiteSummaryReport(List<ISuite> suites) throws Exception {
 		printExecutionParameters(suites);
 		m_out.println("<b align=\"center\">Test Execution Summary</b>");
@@ -505,8 +526,8 @@ public String  htmlContents() {
 		tableColumnStart("# skipped");
 		tableColumnStart("# failed");
 		tableColumnStart("Total<br>Time");
-		tableColumnStart("Included<br>Groups");
-		tableColumnStart("Excluded<br>Groups");
+		/*tableColumnStart("Included<br>Groups");
+		tableColumnStart("Excluded<br>Groups");*/
 		m_out.println("</tr>");
 
 		int qty_tests = 0;
@@ -542,8 +563,8 @@ public String  htmlContents() {
 				testEnd = overview.getEndDate().getTime();
 				String passedTime = convertLongToCanonicalLengthOfTime(testEnd - testStart);
 				summaryCell(passedTime, true);
-				summaryCell(overview.getIncludedGroups());
-				summaryCell(overview.getExcludedGroups());
+				/*summaryCell(overview.getIncludedGroups());
+				summaryCell(overview.getExcludedGroups());*/
 				m_out.println("</tr>");
 				m_testIndex++;
 			}
@@ -554,21 +575,20 @@ public String  htmlContents() {
 			summaryCell(qty_fail, 0);
 			// String passedTime = convertLongToCanonicalLengthOfTime( testEnd -
 			// testStart );
-			summaryCell("9999", true); // TODO fix this
+			summaryCell("9999", true); 
 			m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
 			m_out.println("</table>");
 			m_out.println("<p></p>");
 		}
 	}
 
-	private void printExecutionParameters(List<ISuite> suites) throws Exception {
-		
+	public void printExecutionParameters(List<ISuite> suites) throws Exception {
 		for (ISuite suite : suites) {
 			String suiteName = suite.getName();
-			Capabilities caps = ((RemoteWebDriver)BaseTestObject.driver).getCapabilities();
+			Capabilities caps = ((RemoteWebDriver) BaseTestObject.driver).getCapabilities();
 			String browsername = caps.getBrowserName();
-			String browserVersion=caps.getVersion();
-			String OS =caps.getPlatform().toString();
+			String browserVersion = caps.getVersion();
+			String OS = caps.getPlatform().toString();
 			Properties prop = new Properties();
 			String propertyFilePath = System.getProperty("user.dir")
 					+ "\\src\\test\\resources\\testdata\\testData.properties";
@@ -583,21 +603,82 @@ public String  htmlContents() {
 			tableColumnStart("OSType");
 			tableColumnStart("Browser");
 			tableColumnStart("BrowserVersion");
-
 			m_out.println("</tr>");
 			summaryCell(suiteName, true);
 			summaryCell(url, true);
 			summaryCell(OS, true);
 			summaryCell(browsername, true);
 			summaryCell(browserVersion, true);
-
 			m_out.println("</table>");
 			m_out.println("<p></p>");
 		}
-
 	}
-	 
 
+	public String printEnvironmentDetails(List<ISuite> suites) throws Exception {
+		StringBuffer sb = new StringBuffer();
+			Capabilities caps = ((RemoteWebDriver) BaseTestObject.driver).getCapabilities();
+			String browsername = caps.getBrowserName();
+			String browserVersion = caps.getVersion();
+			String OS = caps.getPlatform().toString();
+			Properties prop = new Properties();
+			String propertyFilePath = System.getProperty("user.dir")
+					+ "\\src\\test\\resources\\testdata\\testData.properties";
+			InputStream input = new FileInputStream(propertyFilePath);
+			prop.load(input);
+			String url = prop.getProperty("url");
+			sb.append("<table width='40%' border=1 >");
+			sb.append(
+					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");
+			sb.append("<tr>");
+			sb.append("<td ><b><font  size=2>Url of the Application</font>   </td><td align='center' size=2> <a href="
+					+ url + "> " + url + "</a></b></td></tr>");
+			sb.append("<td><b><font  size=2>Browser Name </td><td width=20 align='center' size=2>  " + browsername
+					+ "</b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>OS Executed </td><td width=20 align='center' size=2>  " + OS
+					+ "</b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>Date </td><td width=20 align='center' size=2>  " + new Date()
+					+ " </b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>Browser Version </td><td width=20 align='center' size=2>  " + browserVersion
+					+ " </b></td> </font></tr>");
+			sb.append("</table>");
+		
+		return sb.toString();
+	}
+
+	public String printTestExecutionSummary(List<ISuite> suites) {
+		 StringBuffer sbuffer = new StringBuffer();
+		 for (ISuite suite : suites) {
+				Map<String, ISuiteResult> suiteResults = suite.getResults();
+				for (ISuiteResult sr : suiteResults.values()) {
+					ITestContext context = sr.getTestContext();
+		 int passedCount=context.getPassedTests().getAllResults().size();
+		 int skippedCount=context.getSkippedTests().getAllResults().size();
+		 int failedCount=context.getFailedTests().getAllResults().size();
+         int totalCount = passedCount + skippedCount + failedCount;
+         
+         String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
+         String[] allClasses = xmlName.split("\\.");
+         String className = allClasses[allClasses.length - 1];
+         sbuffer.append("<h4>Test Execution Summary</h4>");
+         sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
+         sbuffer.append("<tr><td align='center'><font  color=blue >Test Class</td>");
+         sbuffer.append("<td align='center'><font  color=green >Pass</td>");
+         sbuffer.append("<td align='center'><font  color=red >Fail</td>");
+         sbuffer.append("<td align='center'><font  color=grey >Skip</td>");
+         sbuffer.append("<td align='center'><font  color=blue >Total </td>");
+         sbuffer.append("<td align='center'><font  color=blue >Time (hh:mm:ss)</td></tr>");
+         sbuffer.append("<tr><td align='center'><font  color=blue >" + className + "</td>");
+         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
+         sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
+         sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");
+         sbuffer.append("<td align='center'><font  color=blue >" + totalCount + "</td>");
+         sbuffer.append("</table>");
+         }
+       
+  }
+		  return sbuffer.toString();
+	 }
+	 
 	private void summaryCell(String[] val) {
 		StringBuffer b = new StringBuffer();
 		for (String v : val) {
@@ -728,7 +809,7 @@ public String  htmlContents() {
 
 	public void sendMailViaExchnageService(String username, String password, String subject, String body,
 			List<String> toAddressList) throws Exception {
-		
+
 		logger.info("Mail sending Inprogress...");
 		ExchangeService service;
 
@@ -742,13 +823,13 @@ public String  htmlContents() {
 		}
 		EmailMessage msg;
 		try {
-			
+
 			msg = new EmailMessage(service);
 			msg.setSubject(subject);
 			msg.setBody(MessageBody.getMessageBodyFromText(body));
 			Iterator<String> mailList = toAddressList.iterator();
 			msg.getToRecipients().addSmtpAddressRange(mailList);
-			
+
 			msg.send();
 			logger.info("Mail sending Success...Please check your inbox");
 		} catch (Exception e) {

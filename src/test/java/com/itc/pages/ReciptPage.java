@@ -73,6 +73,7 @@ public class ReciptPage extends BasePageObject {
 		setElement(uploadLink).click();
 		driver.findElement(browseBtn).sendKeys(filePath);
 		setElement(uploadBtn).click();
+		
 		setElement(attachLink).click();
 		setElement(rowSelect).click();
 		if (isElementPresent(saveAndAttachBtn)) {
@@ -80,7 +81,20 @@ public class ReciptPage extends BasePageObject {
 		}
 
 	}
-	
+	public void uploadReciptUsingAutoIt() throws Exception {
+
+		setElement(uploadLink).click();
+		setElement(browseBtn).click();
+		Runtime.getRuntime().exec("C:/Selenium_Workspace/AAT_Selenium/src/test/resources/testdata/SampleUpload.exe");
+		Thread.sleep(3000);
+		setElement(uploadBtn).click();
+		setElement(attachLink).click();
+		setElement(rowSelect).click();
+		if (isElementPresent(saveAndAttachBtn)) {
+			setElement(saveAndAttachBtn).click();
+		}
+
+	}
 	public boolean isTitleDisplayed() {
 
 		getPageTitle();

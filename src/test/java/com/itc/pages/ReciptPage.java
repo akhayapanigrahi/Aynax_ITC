@@ -70,28 +70,36 @@ public class ReciptPage extends BasePageObject {
 
 	public void uploadRecipt() throws Exception {
 
-		setElement(uploadLink).click();
-		driver.findElement(browseBtn).sendKeys(filePath);
-		setElement(uploadBtn).click();
-		
-		setElement(attachLink).click();
-		setElement(rowSelect).click();
-		if (isElementPresent(saveAndAttachBtn)) {
-			setElement(saveAndAttachBtn).click();
+		try {
+			setElement(uploadLink).click();
+			driver.findElement(browseBtn).sendKeys(filePath);
+			setElement(uploadBtn).click();
+			
+			setElement(attachLink).click();
+			setElement(rowSelect).click();
+			if (isElementPresent(saveAndAttachBtn)) {
+				setElement(saveAndAttachBtn).click();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
 	public void uploadReciptUsingAutoIt() throws Exception {
 
-		setElement(uploadLink).click();
-		setElement(browseBtn).click();
-		Runtime.getRuntime().exec("C:/Selenium_Workspace/AAT_Selenium/src/test/resources/testdata/SampleUpload.exe");
-		Thread.sleep(3000);
-		setElement(uploadBtn).click();
-		setElement(attachLink).click();
-		setElement(rowSelect).click();
-		if (isElementPresent(saveAndAttachBtn)) {
-			setElement(saveAndAttachBtn).click();
+		try {
+			setElement(uploadLink).click();
+			setElement(browseBtn).click();
+			Runtime.getRuntime().exec("C:/Selenium_Workspace/AAT_Selenium/src/test/resources/testdata/SampleUpload.exe");
+			Thread.sleep(3000);
+			setElement(uploadBtn).click();
+			setElement(attachLink).click();
+			setElement(rowSelect).click();
+			if (isElementPresent(saveAndAttachBtn)) {
+				setElement(saveAndAttachBtn).click();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -113,7 +121,6 @@ public class ReciptPage extends BasePageObject {
 				Assert.assertTrue(expectedtitle.contains("List of Receipts:: Aynax.com"));
 				String text = getText(successDialog);
 				logger.info("Success text" + text);
-
 				Assert.assertTrue(text.contains("×"));
 
 			} else {
@@ -122,7 +129,6 @@ public class ReciptPage extends BasePageObject {
 				Assert.assertTrue(expectedtitle.contains("New Transaction:: Aynax.com"));
 				String text = getText(errorDialog);
 				logger.info("The error text is" + text);
-
 				Assert.assertTrue(text.contains("Total debit and total credit must equal for each transaction date."));
 			}
 		} catch (Exception e) {

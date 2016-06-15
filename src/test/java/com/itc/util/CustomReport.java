@@ -117,8 +117,7 @@ public class CustomReport implements IReporter {
 			// FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
 			for (ISuite suite : suites) {
 				String suiteName = suite.getName();
-				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", suiteName + " Report",
-						sb.toString(), lst);
+				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", suiteName + " Report",sb.toString(), lst);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,10 +131,11 @@ public class CustomReport implements IReporter {
 	private void reportContent(List<ISuite> suites) throws Exception {
 
 		sb.append(
-				"<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title>TestNG:  Unit Test</title><style type=\"text/css\">table caption,table.info_table,table.param,table.passed,table.failed {margin-bottom:10px;border:1px solid #000099;border-collapse:collapse;empty-cells:show;}table.info_table td,table.info_table th,table.param td,table.param th,table.passed td,table.passed th,table.failed td,table.failed th {border:1px solid #000099;padding:.25em .5em .25em .5em}table.param th {vertical-align:bottom}td.numi,th.numi,td.numi_attn {text-align:center}tr.total td {font-weight:bold}table caption {text-align:center;font-weight:bold;}table.passed tr.stripe td,table tr.passedodd td {background-color: #00AA00;}table.passed td,table tr.passedeven td {background-color: #33FF33;}table.passed tr.stripe td,table tr.skippedodd td {background-color: #cccccc;}table.passed td,table tr.skippedodd td {background-color: #dddddd;}table.failed tr.stripe td,table tr.failedodd td,table.param td.numi_attn {background-color: #FF3333;}table.failed td,table tr.failedeven td,table.param tr.stripe td.numi_attn {background-color: #DD0000;}tr.stripe td,tr.stripe th {background-color: #E6EBF9;}p.totop {font-size:85%;text-align:center;border-bottom:2px black solid}div.shootout {padding:2em;border:3px #4854A8 solid}</style></head><body>");
-		sb.append("Hi Everybody,");
+				"<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title>Aynax Execution</title><style type=\"text/css\">table caption,table.info_table,table.param,table.passed,table.failed {margin-bottom:10px;border:1px solid #000099;border-collapse:collapse;empty-cells:show;}table.info_table td,table.info_table th,table.param td,table.param th,table.passed td,table.passed th,table.failed td,table.failed th {border:1px solid #000099;padding:.25em .5em .25em .5em}table.param th {vertical-align:bottom}td.numi,th.numi,td.numi_attn {text-align:center}tr.total td {font-weight:bold}table caption {text-align:center;font-weight:bold;}table.passed tr.stripe td,table tr.passedodd td {background-color: #00AA00;}table.passed td,table tr.passedeven td {background-color: #33FF33;}table.passed tr.stripe td,table tr.skippedodd td {background-color: #cccccc;}table.passed td,table tr.skippedodd td {background-color: #dddddd;}table.failed tr.stripe td,table tr.failedodd td,table.param td.numi_attn {background-color: #FF3333;}table.failed td,table tr.failedeven td,table.param tr.stripe td.numi_attn {background-color: #DD0000;}tr.stripe td,tr.stripe th {background-color: #E6EBF9;}p.totop {font-size:85%;text-align:center;border-bottom:2px black solid}div.shootout {padding:2em;border:3px #4854A8 solid}</style></head><body>");
+		
 		for (ISuite suite : suites) {
 			String suiteName = suite.getName();
+			sb.append("Hi Everybody,");
 			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
 			sb.append(printEnvironmentDetails(suites));
 			sb.append(printTestExecutionSummary(suites));
@@ -496,24 +496,6 @@ public class CustomReport implements IReporter {
 		return result;
 	}
 
-	public String getTableDetails(String pagesource) throws IOException, URISyntaxException {
-		StringBuffer strBuf = new StringBuffer();
-
-		String strTemp = pagesource.split("</table>")[1];
-
-		int index = strTemp.indexOf("<table cellspacing=\"0\" cellpadding=\"0\" class=\"param\">");
-		if (index == -1) {
-			strTemp = pagesource.split("</table>")[0];
-			index = strTemp.indexOf("<table cellspacing=\"0\" cellpadding=\"0\" class=\"param\">");
-		}
-		strTemp = strTemp.substring(index);
-
-		strBuf.append(strTemp);
-		strBuf.append("</table>");
-
-		return strBuf.toString();
-
-	}
 
 	public void generateSuiteSummaryReport(List<ISuite> suites) throws Exception {
 		printExecutionParameters(suites);
@@ -525,7 +507,7 @@ public class CustomReport implements IReporter {
 		tableColumnStart("Scenarios<br>Passed");
 		tableColumnStart("# skipped");
 		tableColumnStart("# failed");
-		tableColumnStart("Total<br>Time");
+		tableColumnStart("Total Time");
 		/*tableColumnStart("Included<br>Groups");
 		tableColumnStart("Excluded<br>Groups");*/
 		m_out.println("</tr>");
@@ -573,12 +555,23 @@ public class CustomReport implements IReporter {
 			summaryCell(qty_pass_s, Integer.MAX_VALUE);
 			summaryCell(qty_skip, 0);
 			summaryCell(qty_fail, 0);
+			for (ISuite suite1 : suites) {
+				Map<String, ISuiteResult> suiteResults = suite.getResults();
+				for (ISuiteResult sr : suiteResults.values()) {
+					ITestContext context = sr.getTestContext();
+			testStart = context.getStartDate().getTime();
+			testEnd = context.getEndDate().getTime();
+			String passedTime = convertLongToCanonicalLengthOfTime( testEnd - testStart );
+			summaryCell(passedTime, true);
+			}
+			}
 			// String passedTime = convertLongToCanonicalLengthOfTime( testEnd -
 			// testStart );
-			summaryCell("9999", true); 
-			m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
+			//summaryCell("9999", true); 
+			//m_out.println("<td colspan=\"1\"></td>");
+			//m_out.println("<td colspan=\"2\">&nbsp;</td></tr>");
 			m_out.println("</table>");
-			m_out.println("<p></p>");
+			//m_out.println("<p></p>");
 		}
 	}
 
@@ -632,12 +625,12 @@ public class CustomReport implements IReporter {
 			sb.append("<tr>");
 			sb.append("<td ><b><font  size=2>Url of the Application</font>   </td><td align='center' size=2> <a href="
 					+ url + "> " + url + "</a></b></td></tr>");
-			sb.append("<td><b><font  size=2>Browser Name </td><td width=20 align='center' size=2>  " + browsername
-					+ "</b></td> </font></tr>");
 			sb.append("<td><b><font  size=2>OS Executed </td><td width=20 align='center' size=2>  " + OS
 					+ "</b></td> </font></tr>");
-			sb.append("<td><b><font  size=2>Date </td><td width=20 align='center' size=2>  " + new Date()
+			sb.append("<td><b><font  size=2>Date of Execution</td><td width=20 align='center' size=2>  " + new Date()
 					+ " </b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>Browser Name </td><td width=20 align='center' size=2>  " + browsername
+					+ "</b></td> </font></tr>");
 			sb.append("<td><b><font  size=2>Browser Version </td><td width=20 align='center' size=2>  " + browserVersion
 					+ " </b></td> </font></tr>");
 			sb.append("</table>");
@@ -647,6 +640,8 @@ public class CustomReport implements IReporter {
 
 	public String printTestExecutionSummary(List<ISuite> suites) {
 		 StringBuffer sbuffer = new StringBuffer();
+		 long testStart;
+			long testEnd;
 		 for (ISuite suite : suites) {
 				Map<String, ISuiteResult> suiteResults = suite.getResults();
 				for (ISuiteResult sr : suiteResults.values()) {
@@ -655,23 +650,36 @@ public class CustomReport implements IReporter {
 		 int skippedCount=context.getSkippedTests().getAllResults().size();
 		 int failedCount=context.getFailedTests().getAllResults().size();
          int totalCount = passedCount + skippedCount + failedCount;
-         
-         String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
+        /* String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
          String[] allClasses = xmlName.split("\\.");
-         String className = allClasses[allClasses.length - 1];
+         String className = allClasses[allClasses.length - 1];*/
+         //String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
+         int size = context.getCurrentXmlTest().getClasses().size();
+         testStart = context.getStartDate().getTime();
+		 testEnd = context.getEndDate().getTime();
+		 String totalTime = convertLongToCanonicalLengthOfTime( testEnd - testStart );
+		 
          sbuffer.append("<h4>Test Execution Summary</h4>");
          sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
-         sbuffer.append("<tr><td align='center'><font  color=blue >Test Class</td>");
-         sbuffer.append("<td align='center'><font  color=green >Pass</td>");
-         sbuffer.append("<td align='center'><font  color=red >Fail</td>");
-         sbuffer.append("<td align='center'><font  color=grey >Skip</td>");
-         sbuffer.append("<td align='center'><font  color=blue >Total </td>");
-         sbuffer.append("<td align='center'><font  color=blue >Time (hh:mm:ss)</td></tr>");
-         sbuffer.append("<tr><td align='center'><font  color=blue >" + className + "</td>");
+         //sbuffer.append("<tr><td align='center'><font  color=blue >Test Class</td>");
+         sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
+         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
+         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
+         sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
+         sbuffer.append("<td align='center'><font  color=blue >Time Duration (hh:mm:ss)</td></tr>");
+         /*for(int i=0;i<size;i++){
+        	 String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
+        	 sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ xmlName + ">"+ xmlName + "</a></td>");
+         }*/
+         
+        	 //String className=allClasses[i];
+        	 
+         
          sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
          sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
          sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");
          sbuffer.append("<td align='center'><font  color=blue >" + totalCount + "</td>");
+         sbuffer.append("<td align='center'><font  color=blue >" + totalTime + "</td>");
          sbuffer.append("</table>");
          }
        

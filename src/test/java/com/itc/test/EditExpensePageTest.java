@@ -90,7 +90,7 @@ public class EditExpensePageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 4, enabled = true, groups = "SanityTest")
+	@Test(priority = 3, enabled = true, groups = "SanityTest")
 	public void clearData() throws Exception {
 		try {
 

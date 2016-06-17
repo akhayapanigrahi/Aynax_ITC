@@ -24,6 +24,11 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.apache.xmlbeans.impl.jam.JElement;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.IInvokedMethod;
@@ -58,9 +63,9 @@ public class CustomReport implements IReporter {
 	private Scanner scanner;
 	//private  ITestContext itContext;
 	public static Logger logger = Logger.getLogger(CustomReport.class);
-	private String report = System.getProperty("user.dir") + "\\test-output\\emailablereport.html";
 	private StringBuffer sb = new StringBuffer();
-
+	public String propertyFilePath = System.getProperty("user.dir")
+			+ "\\src\\test\\resources\\testdata\\testData.properties";
 	/**
 	 * This method is the entry point of this class. TestNG calls this listener
 	 * method to generate the report.
@@ -108,18 +113,16 @@ public class CustomReport implements IReporter {
 			e.printStackTrace();
 		}
 		generateMethodSummaryReport(suites);
-		// generateMethodDetailReport( suites );
+		generateMethodDetailReport( suites );
 		endHtml(m_out);
 		try {
-			List<String> lst = new ArrayList<String>();
-			lst.add("Manjunath.Reddy@apollo.edu");
-			// FileReader reader = new
-			// FileReader("C:\\Selenium_Workspace\\AAT_Selenium\\test-output\\AynaxReport.html");
 			for (ISuite suite : suites) {
 				String suiteName = suite.getName();
-				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech7&", suiteName + " Report",sb.toString(), lst);
-			}
-		} catch (Exception e) {
+			List<String> lst = new ArrayList<String>();
+			lst.add("Manjunath.Reddy@apollo.edu");
+				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
+		}
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		m_out.flush();
@@ -139,6 +142,7 @@ public class CustomReport implements IReporter {
 			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
 			sb.append(printEnvironmentDetails(suites));
 			sb.append(printTestExecutionSummary(suites));
+			//sb.append(pieChartReport(suites));
 			sb.append("</body></html>");
 		}
 	}
@@ -338,8 +342,8 @@ public class CustomReport implements IReporter {
 			for (ITestResult result : tests.getAllResults()) {
 				ITestNGMethod method = result.getMethod();
 				m_methodIndex++;
-				String cname = method.getTestClass().getName();
-				m_out.println("<h2 id=\"m" + m_methodIndex + "\">" + cname + " : " + method.getMethodName() + "</h2>");
+				String packname = method.getTestClass().getName();
+				m_out.println("<h2 id=\"m" + m_methodIndex + "\">" + packname + " : " + method.getMethodName() + "</h2>");
 				Set<ITestResult> resultSet = tests.getResults(method);
 				generateForResult(result, method, resultSet.size());
 				m_out.println("<p class=\"totop\"><a href=\"#summary\">back to summary</a></p>");
@@ -420,7 +424,7 @@ public class CustomReport implements IReporter {
 			}
 			m_out.println("</tr>");
 		} else {
-			m_out.println("<tr><td><i>Test did not have parameters.</i></td></tr> ");
+			//m_out.println("<tr><td><i>Test did not have parameters.</i></td></tr> ");
 		}
 		List<String> msgs = Reporter.getOutput(ans);
 		boolean hasReporterOutput = msgs.size() > 0;
@@ -583,8 +587,8 @@ public class CustomReport implements IReporter {
 			String browserVersion = caps.getVersion();
 			String OS = caps.getPlatform().toString();
 			Properties prop = new Properties();
-			String propertyFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\resources\\testdata\\testData.properties";
+			/*String propertyFilePath = System.getProperty("user.dir")
+					+ "\\src\\test\\resources\\testdata\\testData.properties";*/
 			InputStream input = new FileInputStream(propertyFilePath);
 			prop.load(input);
 			String url = prop.getProperty("url");
@@ -614,9 +618,10 @@ public class CustomReport implements IReporter {
 			String browserVersion = caps.getVersion();
 			String OS = caps.getPlatform().toString();
 			Properties prop = new Properties();
-			String propertyFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\resources\\testdata\\testData.properties";
+			/*String propertyFilePath = System.getProperty("user.dir")
+					+ "\\src\\test\\resources\\testdata\\testData.properties";*/
 			InputStream input = new FileInputStream(propertyFilePath);
+			
 			prop.load(input);
 			String url = prop.getProperty("url");
 			sb.append("<table width='40%' border=1 >");
@@ -637,7 +642,42 @@ public class CustomReport implements IReporter {
 		
 		return sb.toString();
 	}
-
+	public void pieChartReport(List<ISuite> suites)
+	{
+		// Creating a simple pie chart with 
+		 DefaultPieDataset pieDataset = new DefaultPieDataset();
+		 
+		 for (ISuite suite : suites) {
+				Map<String, ISuiteResult> suiteResults = suite.getResults();
+				for (ISuiteResult sr : suiteResults.values()) {
+					ITestContext context = sr.getTestContext();
+		 int passedCount=context.getPassedTests().getAllResults().size();
+		 int skippedCount=context.getSkippedTests().getAllResults().size();
+		 int failedCount=context.getFailedTests().getAllResults().size();
+		 pieDataset.setValue("PASS", new Integer(65));
+		 pieDataset.setValue("FAIL", new Integer(65));
+		 pieDataset.setValue("SKIP", new Integer(65));
+		 pieDataset.setValue("N/A", new Integer(10));
+		
+		 
+				}
+		 }
+		 JFreeChart piechart = ChartFactory.createPieChart("Test Case Execution Status", pieDataset, true, true, false);
+				
+		 try {
+			ChartUtilities.saveChartAsJPEG(new File("simplePiechart.jpg"), piechart, 400, 400);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		 
+		//return piechart;
+	
+	}
+	
+	
 	public String printTestExecutionSummary(List<ISuite> suites) {
 		 StringBuffer sbuffer = new StringBuffer();
 		 long testStart;

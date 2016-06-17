@@ -25,11 +25,9 @@ public class HomePageTest extends BaseTestObject{
 		flag = objHomePage.isSiteLogoDisplayed();
 	    Assert.assertTrue(flag, "Site logo is not displayed");
 	    objLoginPage = objHomePage.clickOnLogin();
-	    
 	    flag = objLoginPage.isLoginPageDisplayed();
 	    Assert.assertTrue(flag, "Login page is not displayed");
 	    
-	    //String valuefromExcel = getValFromExcel(row, col);
 	} 
 	catch (Exception e) 
 	{
@@ -39,9 +37,4 @@ public class HomePageTest extends BaseTestObject{
 	}
 	
 	
-	/*public static String getValFromExcel(int row,int col) throws Exception{
-		
-		ExcelutilObject.setExcelFile("", "");
-		return ExcelutilObject.getCellData(RowNum, ColNum);
 	}
-*/}

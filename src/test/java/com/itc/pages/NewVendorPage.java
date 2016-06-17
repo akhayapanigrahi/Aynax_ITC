@@ -58,9 +58,7 @@ public class NewVendorPage extends BasePageObject{
 		catch (Exception e) 
 		{
 			e.printStackTrace();
-			//throw new Exception("Expense tab is displayed::"+isExpenseTabDisplayed()+e.getLocalizedMessage());
 		}
-		//return flag;
 	}	
 	
 	

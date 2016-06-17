@@ -87,7 +87,6 @@ public class ReciptPage extends BasePageObject {
 	}
 	public void uploadReciptUsingAutoIt() throws Exception {
 
-		try {
 			setElement(uploadLink).click();
 			setElement(browseBtn).click();
 			Runtime.getRuntime().exec("C:/Selenium_Workspace/AAT_Selenium/src/test/resources/testdata/SampleUpload.exe");
@@ -98,10 +97,6 @@ public class ReciptPage extends BasePageObject {
 			if (isElementPresent(saveAndAttachBtn)) {
 				setElement(saveAndAttachBtn).click();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 	public boolean isTitleDisplayed() {
 

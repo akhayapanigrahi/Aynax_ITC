@@ -55,7 +55,6 @@ public class NewVendorPageTest extends BaseTestObject{
 		objNewVendorPage.clickOnNewVendor();
 	    String vendorName =getValFromExcel(2,2);
 	    String address =getValFromExcel(2,3);
-	    
 		objNewVendorPage.VendorCreation(vendorName,address);
 	    objNewVendorPage.isResultPageDisplayed();
 	    titleflag= objNewVendorPage.isTitleDisplayed();
@@ -77,7 +76,6 @@ public class NewVendorPageTest extends BaseTestObject{
 		objNewVendorPage.clickOnNewVendor();
 	    String vendorName =getValFromExcel(5,5);
 	    String address =getValFromExcel(6,6);
-	    
 		objNewVendorPage.VendorCreation(vendorName,address);
 	    objNewVendorPage.isResultPageDisplayed();
 	    titleflag= objNewVendorPage.isTitleDisplayed();

@@ -2,7 +2,11 @@
 <suite name="Sanity Test Suite">
 	<parameter name="browserType" value="FF" />
 	<listeners>
-        <listener class-name="com.itc.util.CustomReport" />
+       <listener class-name="com.itc.util.CustomReport" /> 
+        <listener class-name="com.itc.util.ExtentReporterNG" />
+                <listener class-name="com.itc.util.NewReportCreation" />
+        
+        
     </listeners>
     
 	<test name="Sanity Tests" preserve-order="true">
@@ -16,8 +20,8 @@
 			<class name="com.itc.test.EditExpensePageTest" />
 			<class name="com.itc.test.ReciptPageTest" />
 			<class name="com.itc.test.NewCustomerPageTest" />
-			<class name="com.itc.test.NewInvoicePageTest" />
-		
+			<class name="com.itc.test.NewInvoicePageTest" /> 
+			<class name="com.itc.test.ReciptPageTest" />
 			
 		</classes>
 	</test>

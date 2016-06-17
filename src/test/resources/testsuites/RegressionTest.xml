@@ -5,12 +5,11 @@
 	<listeners>
 		<listener class-name="com.itc.util.CustomReport" />
 	</listeners>
-	<test name="Regression Tests" preserve-order="true">
+	<test name="Regression Tests" preserve-order="true" >
 
 		<groups>
 			<run>
 				<include name="Regression" />
-
 			</run>
 		</groups>
 		<classes>
@@ -20,7 +19,7 @@
 			<class name="com.itc.test.EditVendorPageTest" />
 			<class name="com.itc.test.DeleteVendorPageTest" />
 			<class name="com.itc.test.NewAccountPageTest" />
-			<class name="com.itc.test.EditAccountPageTest" /> 
+			<class name="com.itc.test.EditAccountPageTest" />
 			<class name="com.itc.test.EditAccounListTransactionTest" />
 			<class name="com.itc.test.NewJournalPageTest" />
 			<class name="com.itc.test.EditJournalPageTest" />
@@ -29,7 +28,9 @@
 			<class name="com.itc.test.ReciptPageTest" />
 			<class name="com.itc.test.ListPaymentPageTest" />
 			<class name="com.itc.test.NewInvoicePageTest" />
-			<class name="com.itc.test.NewCustomerPageTest" />
+			<class name="com.itc.test.NewCustomerPageTest"> 
+				
+			</class>
 		</classes>
 
 	</test>

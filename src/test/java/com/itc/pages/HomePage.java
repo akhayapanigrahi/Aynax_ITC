@@ -34,7 +34,6 @@ public class HomePage extends BasePageObject
 	By imgSiteLogo = By.xpath("//img[@alt='Aynax.com Logo']");
 	By lnkLogin = By.linkText("Login");
 	
-	
 	public boolean isSiteLogoDisplayed() throws Exception
 	{
 		try 
@@ -55,6 +54,9 @@ public class HomePage extends BasePageObject
 		}
 		return flag;
 	}
+	
+	
+	
 	
 	/**
 	 * This method helps us click on Login

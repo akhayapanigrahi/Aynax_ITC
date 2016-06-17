@@ -120,7 +120,7 @@ public class CustomReport implements IReporter {
 				String suiteName = suite.getName();
 			List<String> lst = new ArrayList<String>();
 			lst.add("Manjunath.Reddy@apollo.edu");
-				sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
+			sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
 		}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -702,19 +702,26 @@ public class CustomReport implements IReporter {
          sbuffer.append("<h4>Test Execution Summary</h4>");
          sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
          //sbuffer.append("<tr><td align='center'><font  color=blue >Test Class</td>");
+         sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
          sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
          sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
          sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
          sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
          sbuffer.append("<td align='center'><font  color=blue >Time Duration (hh:mm:ss)</td></tr>");
+        // //Below is to print Classes 
          /*for(int i=0;i<size;i++){
-        	 String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
-        	 sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ xmlName + ">"+ xmlName + "</a></td>");
+        	
+        String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
+        sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ xmlName + ">"+ xmlName + "</a></td>");}*/	
+        	 //String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
+        	 //sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ testName + ">"+ testName + "</a></td>");
+         /*for(int i=0;i<size;i++){
+        	 System.out.println("All Methods are"+suite.getAllMethods());
          }*/
-         
-        	 //String className=allClasses[i];
-        	 
-         
+         List<ITestNGMethod> lst=suite.getAllMethods();
+         for(int i=0;i<lst.size();i++){
+         sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
+         }
          sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
          sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
          sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");

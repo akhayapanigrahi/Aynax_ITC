@@ -4,8 +4,6 @@
 	<listeners>
        <listener class-name="com.itc.util.CustomReport" /> 
         <listener class-name="com.itc.util.ExtentReporterNG" />
-                <listener class-name="com.itc.util.NewReportCreation" />
-        
         
     </listeners>
     
@@ -16,7 +14,7 @@
 			</run>
 		</groups>
 		<classes>
-			<class name="com.itc.test.NewExpensePageTest" />
+			 <class name="com.itc.test.NewExpensePageTest" />
 			<class name="com.itc.test.EditExpensePageTest" />
 			<class name="com.itc.test.ReciptPageTest" />
 			<class name="com.itc.test.NewCustomerPageTest" />

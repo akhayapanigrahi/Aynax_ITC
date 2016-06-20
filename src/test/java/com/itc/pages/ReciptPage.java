@@ -90,8 +90,6 @@ public class ReciptPage extends BasePageObject {
 			setElement(uploadLink).click();
 			setElement(browseBtn).click();
 			Runtime.getRuntime().exec(System.getProperty("user.dir") +"\\src\\test\\resources\\testdata\\SampleUpload.exe");
-
-			//Runtime.getRuntime().exec("C:/Selenium_Workspace/AAT_Selenium/src/test/resources/testdata/SampleUpload.exe");
 			Thread.sleep(3000);
 			setElement(uploadBtn).click();
 			setElement(attachLink).click();

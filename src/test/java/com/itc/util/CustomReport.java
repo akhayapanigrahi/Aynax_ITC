@@ -659,7 +659,7 @@ public class CustomReport implements IReporter {
 		 
         sbuffer.append("<h4>Test Execution Summary</h4>");
         sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
-        sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
+       // sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
         sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
@@ -678,7 +678,7 @@ public class CustomReport implements IReporter {
         }*/
         List<ITestNGMethod> lst=suite.getAllMethods();
         for(int i=0;i<lst.size();i++){
-        sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
+       // sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
         }
         
         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");

@@ -664,7 +664,7 @@ public class CustomReport implements IReporter {
         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
         sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
-        sbuffer.append("<td align='center'><font  color=blue >Result</td>");
+       // sbuffer.append("<td align='center'><font  color=blue >Result</td>");
         sbuffer.append("<td align='center'><font  color=blue >Time Duration (hh:mm:ss)</td></tr>");
        //Below is to print Classes 
         /*for(int i=0;i<size;i++){

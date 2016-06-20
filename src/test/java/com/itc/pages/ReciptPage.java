@@ -119,12 +119,12 @@ public class ReciptPage extends BasePageObject {
 				Assert.assertTrue(text.contains("×"));
 
 			} else {
-				logger.info("New upload Recipt   error page  is displayed");
+				logger.info("New upload Recipt  error page  is displayed");
 				String expectedtitle = getPageTitle();
-				Assert.assertTrue(expectedtitle.contains("New Transaction:: Aynax.com"));
+				Assert.assertTrue(expectedtitle.contains("List of Receipts:: Aynax.com"));
 				String text = getText(errorDialog);
 				logger.info("The error text is" + text);
-				Assert.assertTrue(text.contains("Total debit and total credit must equal for each transaction date."));
+				Assert.assertTrue(text.contains("×"));
 			}
 		} catch (Exception e) {
 			throw new Exception(

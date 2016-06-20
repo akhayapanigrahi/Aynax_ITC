@@ -121,7 +121,7 @@ public class CustomReport implements IReporter {
 				String suiteName = suite.getName();
 			List<String> lst = new ArrayList<String>();
 			lst.add("Manjunath.Reddy@apollo.edu");
-			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
+			sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
 		}
 		}catch (Exception e) {
 			e.printStackTrace();

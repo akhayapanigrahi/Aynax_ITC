@@ -121,7 +121,7 @@ public class CustomReport implements IReporter {
 				String suiteName = suite.getName();
 			List<String> lst = new ArrayList<String>();
 			lst.add("Manjunath.Reddy@apollo.edu");
-			sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
+			//sendMailViaExchnageService("Manjunath.Reddy@apollo.edu", "Itcinfotech8*", suiteName + " Report",sb.toString(), lst);
 		}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -143,7 +143,6 @@ public class CustomReport implements IReporter {
 			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
 			sb.append(printEnvironmentDetails(suites));
 			sb.append(printTestExecutionSummary(suites));
-			//sb.append(pieChartReport(suites));
 			sb.append("</body></html>");
 		}
 	}
@@ -462,7 +461,7 @@ public class CustomReport implements IReporter {
 				m_out.println("</div>");
 			}
 		} else {
-			m_out.println("<tr><td><i>Test did not have report output.</i></td></tr>");
+			//m_out.println("<tr><td><i>Test did not have report output.</i></td></tr>");
 		}
 		m_out.println("</table>");
 	}
@@ -588,8 +587,6 @@ public class CustomReport implements IReporter {
 			String browserVersion = caps.getVersion();
 			String OS = caps.getPlatform().toString();
 			Properties prop = new Properties();
-			/*String propertyFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\resources\\testdata\\testData.properties";*/
 			InputStream input = new FileInputStream(propertyFilePath);
 			prop.load(input);
 			String url = prop.getProperty("url");
@@ -619,8 +616,6 @@ public class CustomReport implements IReporter {
 			String browserVersion = caps.getVersion();
 			String OS = caps.getPlatform().toString();
 			Properties prop = new Properties();
-			/*String propertyFilePath = System.getProperty("user.dir")
-					+ "\\src\\test\\resources\\testdata\\testData.properties";*/
 			InputStream input = new FileInputStream(propertyFilePath);
 			
 			prop.load(input);
@@ -655,10 +650,8 @@ public class CustomReport implements IReporter {
 		 int skippedCount=context.getSkippedTests().getAllResults().size();
 		 int failedCount=context.getFailedTests().getAllResults().size();
         int totalCount = passedCount + skippedCount + failedCount;
-       /* String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
-        String[] allClasses = xmlName.split("\\.");
-        String className = allClasses[allClasses.length - 1];*/
-        //String xmlName = context.getCurrentXmlTest().getClasses().get(0).getName();
+       
+      
         int size = context.getCurrentXmlTest().getClasses().size();
         testStart = context.getStartDate().getTime();
 		 testEnd = context.getEndDate().getTime();
@@ -666,14 +659,14 @@ public class CustomReport implements IReporter {
 		 
         sbuffer.append("<h4>Test Execution Summary</h4>");
         sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
-        //sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
-        
+        sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
         sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
         sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
+        sbuffer.append("<td align='center'><font  color=blue >Result</td>");
         sbuffer.append("<td align='center'><font  color=blue >Time Duration (hh:mm:ss)</td></tr>");
-       // //Below is to print Classes 
+       //Below is to print Classes 
         /*for(int i=0;i<size;i++){
        	
        String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
@@ -685,12 +678,14 @@ public class CustomReport implements IReporter {
         }*/
         List<ITestNGMethod> lst=suite.getAllMethods();
         for(int i=0;i<lst.size();i++){
-        //sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
+        sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
         }
+        
         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=blue >" + totalCount + "</td>");
+        
         sbuffer.append("<td align='center'><font  color=blue >" + totalTime + "</td>");
         sbuffer.append("</table>");
         }

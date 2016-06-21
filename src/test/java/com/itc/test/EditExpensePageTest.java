@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.EditExpensePage;
@@ -17,8 +16,8 @@ public class EditExpensePageTest extends BaseTestObject {
 	public static String excelPath = System.getProperty("user.dir")
 			+ "\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType" })
-	@Test(priority = 0, enabled = true, groups = {"SanityTest","Regression"})
+	//@Parameters({ "browserType" })
+	//@Test(priority = 0, enabled = true, groups = {"SanityTest","Regression"})
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
@@ -90,7 +89,7 @@ public class EditExpensePageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 3, enabled = true, groups = "SanityTest")
+	//@Test(priority = 3, enabled = true, groups = "SanityTest")
 	public void clearData() throws Exception {
 		try {
 

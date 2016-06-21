@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.NewCustomerPage;
@@ -16,8 +15,8 @@ public class NewCustomerPageTest extends BaseTestObject {
 	boolean titleflag = false;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType" })
-	@Test(groups={"SanityTest","Regression"})
+	//@Parameters({ "browserType" })
+	//@Test(groups={"SanityTest","Regression"})
 	
 	public void Login() throws Exception {
 		login.verifyLoginPage();

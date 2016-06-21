@@ -3,17 +3,16 @@ package com.itc.test;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.itc.pages.EditExpensePage;
 import com.itc.pages.ReciptPage;
 import com.itc.util.BaseTestObject;
 
 public class ReciptPageTest extends BaseTestObject{
 
 	ReciptPage objReciptPage = null;
+	EditExpensePage objEditExpensePage = null;
 	LoginPageTest login=new LoginPageTest();
-	boolean flag = false;
-	boolean flag1 = false;
-	boolean flag2=false;
-	boolean titleflag=false;
+	
 
 	@Parameters({"browserType"})
 	@Test(priority=1, enabled=true,groups="SanityTest")
@@ -21,12 +20,12 @@ public class ReciptPageTest extends BaseTestObject{
 	{
 	try 
 	{
-		login.verifyLoginPage();
+		//login.verifyLoginPage();
 		objReciptPage = new ReciptPage(driver);
 		objReciptPage.clickOnLisRecipt();
 	    objReciptPage.uploadReciptUsingAutoIt();
-	    flag1=objReciptPage.isResultPageDisplayed();
-	    titleflag= objReciptPage.isTitleDisplayed();
+	    objReciptPage.isResultPageDisplayed();
+	    objReciptPage.isTitleDisplayed();
 	    
 	} 
 	
@@ -34,11 +33,31 @@ public class ReciptPageTest extends BaseTestObject{
 	{
 		e.printStackTrace();
 	}
+	}
+	@Test(priority = 2, enabled = true, groups = "SanityTest")
+	public void clearData() throws Exception {
+		try {
+			objEditExpensePage = new EditExpensePage(driver);
+			Thread.sleep(6000);
+			objEditExpensePage.clickOnListExpense();
+			objEditExpensePage.deleteExpense();
+			objEditExpensePage.isExpenseDeleted();
+			objEditExpensePage.isTitleDisplayed();
+			objEditExpensePage.vendorDeletion1();
+			objEditExpensePage.vendorDeletion2();
 
+		}
+
+		catch (Exception e) {
+			throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE"
+					+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
+		}
+
+	}
 	}
 	
 	
 
 	
 	
-}
+

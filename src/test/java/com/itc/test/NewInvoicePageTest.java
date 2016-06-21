@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.NewInvoicePage;
@@ -16,15 +15,15 @@ public class NewInvoicePageTest extends BaseTestObject {
 	boolean titleflag = false;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType"})
-	@Test(priority = 0, enabled = true,groups={"SanityTest","Regression"})
+	//@Parameters({ "browserType"})
+	//@Test(priority = 0, enabled = true,groups={"SanityTest","Regression"})
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
 	}
 
 
-	@Test(priority = 1, enabled = true,groups="SanityTest")
+	@Test(priority = 0, enabled = true,groups="SanityTest")
 	public void verifyInvoiceCreation1() throws Exception {
 		try {
 			objNewInvoicePage = new NewInvoicePage(driver);
@@ -51,7 +50,7 @@ public class NewInvoicePageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 2, enabled = true,groups="SanityTest")
+	@Test(priority = 1, enabled = true,groups="SanityTest")
 	public void verifyInvoiceCreation2() throws Exception {
 		try {
 			objNewInvoicePage = new NewInvoicePage(driver);
@@ -77,7 +76,7 @@ public class NewInvoicePageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 3, enabled = true,groups="Regression")
+	@Test(priority = 2, enabled = true,groups="Regression")
 	public void verifyInvoiceCreation3() throws Exception {
 		try {
 			//login.verifyLoginPage();

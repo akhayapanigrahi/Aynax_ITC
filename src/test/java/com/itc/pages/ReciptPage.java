@@ -5,10 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.itc.common.AynaxUtil;
 import com.itc.util.BasePageObject;
+import com.itc.util.ExcelutilObject;
 
 public class ReciptPage extends BasePageObject {
 
@@ -31,7 +33,9 @@ public class ReciptPage extends BasePageObject {
 	By errorDialog = By.id("no_vendor");
 	By browseBtn = By.id("uploadFileButton");
 	By attachLink = By.linkText("Attach to expense");
-	By rowSelect = By.xpath("//table[@class='table-tablist jSelectableRow']//tr");
+	By deleteConfBtn = By.id("deleteButton");
+	//By rowSelect = By.xpath("//table[@class='table-tablist jSelectableRow']//tr[1]");
+	By closeBtn=By.xpath("//h4[contains(.,'Attach Receipt to Expense')]/preceding-sibling::button");
 	By saveAndAttachBtn = By.id("saveAttachedListReceipt");
 	By newExpenseSelect = By.id("newExpenseLabel");
 	By billdate = By.id("billDateReceipt");
@@ -41,7 +45,7 @@ public class ReciptPage extends BasePageObject {
 	By amount = By.id("amountReceipt");
 	By categoryDropdown = By.xpath("//select[@id='categoryReceipt']");
 	By paidDropdown = By.xpath("//select[@id='paidReceipt']");
-
+	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 	String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\SampleDoc.docx";
 
 	public void clickOnLisRecipt() throws Exception {
@@ -74,8 +78,9 @@ public class ReciptPage extends BasePageObject {
 			setElement(uploadLink).click();
 			driver.findElement(browseBtn).sendKeys(filePath);
 			setElement(uploadBtn).click();
-			
 			setElement(attachLink).click();
+			String vendorName = getValFromExcel(3, 2);
+			By rowSelect = By.xpath("//td[contains(.,'"+vendorName+"')]");
 			setElement(rowSelect).click();
 			if (isElementPresent(saveAndAttachBtn)) {
 				setElement(saveAndAttachBtn).click();
@@ -90,14 +95,28 @@ public class ReciptPage extends BasePageObject {
 			setElement(uploadLink).click();
 			setElement(browseBtn).click();
 			Runtime.getRuntime().exec(System.getProperty("user.dir") +"\\src\\test\\resources\\testdata\\SampleUpload.exe");
-			Thread.sleep(3000);
+			Thread.sleep(6000);
 			setElement(uploadBtn).click();
 			setElement(attachLink).click();
+			Thread.sleep(3000);
+			String vendorName = getValFromExcel(3, 2);
+			By rowSelect = By.xpath("//td[contains(.,'"+vendorName+"')]");
 			setElement(rowSelect).click();
 			if (isElementPresent(saveAndAttachBtn)) {
 				setElement(saveAndAttachBtn).click();
+				Thread.sleep(10000);
 			}
+			if (isElementPresent(closeBtn)) {
+				setElement(closeBtn).click();
+			}
+			/*By listReciptDeleteDrop=By.xpath("//div[@class='dropdown open']/ul[@class='dropdown-menu listreceipt-dropdown-menu']/li/button[@data-target='#confirmDelete']");
+			Thread.sleep(10000);
+			setElement(listReciptDeleteDrop).click();
+			setElement(deleteConfBtn).click();*/
+			
 	}
+	
+	
 	public boolean isTitleDisplayed() {
 
 		getPageTitle();
@@ -132,5 +151,9 @@ public class ReciptPage extends BasePageObject {
 		}
 		return flag1;
 	}
+	public static String getValFromExcel(int row, int col) throws Exception {
 
+		ExcelutilObject.setExcelFile(excelPath, "VendorData");
+		return ExcelutilObject.getCellData(row, col);
+	}
 }

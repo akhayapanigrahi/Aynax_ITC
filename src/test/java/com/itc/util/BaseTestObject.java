@@ -28,7 +28,7 @@ public class BaseTestObject {
 	
 	public String browser = ObjProperty.getProperty("browser");
 	public String url = ObjProperty.getProperty("url");
-	
+	 VideoRecord test=new VideoRecord();
 	
 	/**
 	 
@@ -99,6 +99,8 @@ public class BaseTestObject {
         {
         	throw new Exception("Browser is not correct");
         }
+       
+        test.startRecording();
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
         driver.manage().window().maximize();
@@ -109,6 +111,7 @@ public class BaseTestObject {
 	public void tearDown() throws Exception{
 		//ReportSending.execute("testaynaxdemo@gmail.com","testaynaxdemo@gmail.com");
 		driver.quit();
+        test.stopRecording();
 	}
 	
 	public void closePopUp() throws InterruptedException{

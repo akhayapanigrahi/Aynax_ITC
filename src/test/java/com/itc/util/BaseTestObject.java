@@ -12,7 +12,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 
@@ -78,7 +80,7 @@ public class BaseTestObject {
 	
 	
 	@Parameters({"browserType"})
-	@BeforeClass(alwaysRun = true)
+	@BeforeSuite(alwaysRun = true)
 	
     public void setup(String browser) throws Exception
 	{
@@ -107,7 +109,7 @@ public class BaseTestObject {
         
 }
 	
-	@AfterClass(alwaysRun = true)
+	@AfterSuite(alwaysRun = true)
 	public void tearDown() throws Exception{
 		//ReportSending.execute("testaynaxdemo@gmail.com","testaynaxdemo@gmail.com");
 		driver.quit();

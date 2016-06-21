@@ -44,7 +44,8 @@ public class VideoRecord {
  
        public void startRecording() throws Exception
        {    
-              File file = new File("C:\\Videos");
+              //File file = new File("C:\\Videos");
+    	   File file = new File(System.getProperty("user.dir")+"\\src\\test\\resources");
                             
               Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
               int width = screenSize.width;
@@ -67,6 +68,7 @@ public class VideoRecord {
                new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black",
                     FrameRateKey, Rational.valueOf(30)),
                null, file, "MyVideo");
+          
           this.screenRecorder.start();
        
        }
@@ -75,4 +77,6 @@ public class VideoRecord {
        {
          this.screenRecorder.stop();
        }
+       
+      
 }

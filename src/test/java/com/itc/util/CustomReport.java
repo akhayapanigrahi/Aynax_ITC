@@ -682,7 +682,7 @@ public class CustomReport implements IReporter{
 		  return sbuffer.toString();
 	 }
 	
-	 private String printMethodResult() {
+	/* private String printMethodResult() {
 		 StringBuffer sbuffer1 = new StringBuffer();
          String body = "";
          Map<String, List<String>> resultMap = ResultListener.m_testResultMap;
@@ -715,7 +715,7 @@ public class CustomReport implements IReporter{
          //sbuffer.append("</body></html>");
 		  return sbuffer1.toString();
 
-  }
+  }*/
 	 
 	/*public String printMethodSummary(List<ISuite> suites) {
 		 StringBuffer sbuffer = new StringBuffer();

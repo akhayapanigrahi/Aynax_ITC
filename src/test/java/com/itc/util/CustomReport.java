@@ -140,7 +140,7 @@ public class CustomReport implements IReporter{
 			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
 			sb.append(printEnvironmentDetails(suites));
 			sb.append(printTestExecutionSummary(suites));
-			sb.append(printMethodResult());
+			//sb.append(printMethodResult());
 			sb.append("</body></html>");
 		}
 	}

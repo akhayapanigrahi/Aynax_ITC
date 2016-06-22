@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.NewExpensePage;
@@ -16,15 +15,15 @@ public class NewExpensePageTest extends BaseTestObject {
 	boolean titleflag = false;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 	
-	@Parameters({"browserType"})
-	@Test(priority = 0, enabled = true,groups="SanityTest")
+	//@Parameters({"browserType"})
+	//@Test(priority = 0, enabled = true,groups="SanityTest")
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
 	}
 
 	
-	@Test(priority = 1, enabled = true,groups="SanityTest")
+	@Test(priority = 0, enabled = true,groups="SanityTest")
 	public void verifyExpenseCreation1() throws Exception {
 		try {
 			objNewExpensePage = new NewExpensePage(driver);
@@ -45,7 +44,7 @@ public class NewExpensePageTest extends BaseTestObject {
 		}
 
 	}
-	@Test(priority = 2, enabled = true,groups="SanityTest")
+	@Test(priority = 1, enabled = true,groups="SanityTest")
 	public void verifyExpenseCreation2() throws Exception {
 		try {
 			objNewExpensePage = new NewExpensePage(driver);

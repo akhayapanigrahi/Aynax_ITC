@@ -620,9 +620,7 @@ public class CustomReport implements IReporter{
 			String buildUrl=JenkinsConnector.getBuildUrl();
 			String buildNo=JenkinsConnector.getBuildNo();
 			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources");
-			
-			String reportLink = JenkinsConnector.getBuildUrl() + "/ws/target/surefire-reports/ExtentReportTestNG.html";
-			
+			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports/ExtentReportTestNG.html");
 			sb.append("<table width='40%' border=1 >");
 			sb.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");
@@ -637,7 +635,7 @@ public class CustomReport implements IReporter{
 					+ "</b></td> </font></tr>");
 			sb.append("<td><b><font  size=2>BROWSER VERSION </td><td width=20 align='center' size=2>  " + browserVersion
 					+ " </b></td> </font></tr>");
-			sb.append("<td ><b><font  size=2>VIDEO URL</font> </td><td align='center' size=2> <a href="
+			sb.append("<td ><b><font  size=2>REPORT LINK</font> </td><td align='center' size=2> <a href="
 					+ reportLink + "> " + reportLink + "</a></b></td></tr>");
 			sb.append("<td ><b><font  size=2>VIDEO URL</font> </td><td align='center' size=2> <a href="
 					+ VideoUrl + "> " + VideoUrl + "</a></b></td></tr>");

@@ -76,7 +76,7 @@ public class LoginPage extends BasePageObject {
 			enterEmailAddr(userName);
 			enterPassword(password);
 			clickLogin();
-			waitForAnElement(TimeSheetTab, 20);
+			waitForAnElement(TimeSheetTab, 10);
 
 		} catch (Exception e) {
 			throw new Exception("Login link is not present in Home page::");

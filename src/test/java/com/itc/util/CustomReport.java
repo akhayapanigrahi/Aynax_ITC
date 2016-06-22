@@ -620,7 +620,7 @@ public class CustomReport implements IReporter{
 			String buildUrl=JenkinsConnector.getBuildUrl();
 			String buildNo=JenkinsConnector.getBuildNo();
 			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources");
-			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports/ExtentReportTestNG.html");
+			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports");
 			sb.append("<table width='40%' border=1 >");
 			sb.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");

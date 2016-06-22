@@ -617,11 +617,10 @@ public class CustomReport implements IReporter{
 			InputStream input = new FileInputStream(propertyFilePath);
 			prop.load(input);
 			String url = prop.getProperty("url");
-			String jobName=JenkinsConnector.getJobName();
-			System.out.println("Build URl"+JenkinsConnector.getBuildUrl());
-			System.out.println("getBuildNo "+JenkinsConnector.getBuildNo());
-			System.out.println("getBuildId"+JenkinsConnector.getBuildId());
-			System.out.println("getJobName"+JenkinsConnector.getJobName());
+			String buildUrl=JenkinsConnector.getBuildUrl();
+			String buildNo=JenkinsConnector.getBuildNo();
+			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources/");
+			System.out.println("Video URl"+VideoUrl);
 
 			System.out.println("Build ID"+JenkinsConnector.getBuildId());
 			
@@ -640,7 +639,7 @@ public class CustomReport implements IReporter{
 			sb.append("<td><b><font  size=2>BROWSER VERSION </td><td width=20 align='center' size=2>  " + browserVersion
 					+ " </b></td> </font></tr>");
 			sb.append("<td ><b><font  size=2>VIDEO URL</font> </td><td align='center' size=2> <a href="
-					+ jobName + "> " + jobName + "</a></b></td></tr>");
+					+ VideoUrl + "> " + VideoUrl + "</a></b></td></tr>");
 			sb.append("</table>");
 		
 		return sb.toString();

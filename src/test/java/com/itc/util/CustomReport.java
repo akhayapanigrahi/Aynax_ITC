@@ -147,7 +147,7 @@ public class CustomReport implements IReporter{
 
 	protected PrintWriter createWriter(String outdir) throws IOException {
 		new File(outdir).mkdirs();
-		return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, "AynaxReport.html"))));
+		return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, "AynaxCustomTestNGReport.html"))));
 	}
 
 	/**

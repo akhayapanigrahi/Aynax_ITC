@@ -4,6 +4,7 @@
 	<parameter name="browserType" value="FF" />
 	<listeners>
 		<listener class-name="com.itc.util.CustomReport" />
+		  <listener class-name="com.itc.util.ExtentReporterNG" />
 	</listeners>
 	<test name="Regression Tests" preserve-order="true" >
 

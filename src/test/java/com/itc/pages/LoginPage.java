@@ -76,7 +76,7 @@ public class LoginPage extends BasePageObject {
 			enterEmailAddr(userName);
 			enterPassword(password);
 			clickLogin();
-			waitForAnElement(TimeSheetTab, 10);
+			waitForAnElement(TimeSheetTab, 20);
 
 		} catch (Exception e) {
 			throw new Exception("Login link is not present in Home page::");
@@ -86,7 +86,7 @@ public class LoginPage extends BasePageObject {
 	public LoginPage clickOnLogin() throws Exception {
 		try {
 			flag = isElementPresent(login);
-			Assert.assertTrue(flag, "Logn link is not displayed");
+			Assert.assertTrue(flag, "Login link is not displayed");
 			setElement(login).click();
 			AynaxUtil.explicitWait(3000);
 

@@ -55,7 +55,6 @@ public class CustomReport implements IReporter{
 	private int m_methodIndex;
 	
 	private Scanner scanner;
-	//private  ITestContext itContext;
 	public static Logger logger = Logger.getLogger(CustomReport.class);
 	private StringBuffer sb = new StringBuffer();
 	public String propertyFilePath = System.getProperty("user.dir")
@@ -654,17 +653,17 @@ public class CustomReport implements IReporter{
 		 sbuffer.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Test Execution Summary </font></th>");
 		 sbuffer.append("<tr>");
-//        sbuffer.append("<h4>Test Execution Summary</h4>");
+        sbuffer.append("<h4>Test Execution Summary</h4>");
         sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
         sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
         sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
         sbuffer.append("<td align='center'><font  color=olive >Time Duration (hh:mm:ss)</td></tr>");
-        /*List<ITestNGMethod> lst=suite.getAllMethods();
+        List<ITestNGMethod> lst=suite.getAllMethods();
         for(int i=0;i<lst.size();i++){
         sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td></tr>");
-        }*/
+        }
         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");

@@ -49,7 +49,7 @@ public class SpecializedScreenRecorder extends ScreenRecorder {
            /* return  new File(movieFolder, name + "-"+ Registry.getInstance().getExtension(fileFormat));*/
             
                   
-         return new File(movieFolder, name + "-" + dateFormat.format(new Date())+"_BuildID:"+JenkinsConnector.getBuildId() + "."
+         return new File(movieFolder, name + "-" + dateFormat.format(new Date())+"_"+JenkinsConnector.getBuildId() + "."
                   + Registry.getInstance().getExtension(fileFormat));
     }
     

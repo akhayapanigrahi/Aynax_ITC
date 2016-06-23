@@ -25,22 +25,7 @@ import org.monte.screenrecorder.ScreenRecorder;
 public class VideoRecord {
     private ScreenRecorder screenRecorder;
   
-    /* public static void main(String[] args) throws Exception {
-                                                                 
-             VideoReord  videoReord = new VideoReord();
-             videoReord.startRecording();                                       
-                       
-             WebDriver driver = new FirefoxDriver();                                    
-             driver.get("http://www.google.com");
-                          
-             WebElement element = driver.findElement(By.name("q"));                                     
-             element.sendKeys("testing");                                    
-             element.submit();                   
-             System.out.println("Page title is: " + driver.getTitle());                                                                       
-             driver.quit();                              
-             videoReord.stopRecording();
-       }*/
-  
+    
  
        public void startRecording() throws Exception
        {    

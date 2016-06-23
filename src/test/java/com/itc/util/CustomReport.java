@@ -617,7 +617,7 @@ public class CustomReport implements IReporter{
 			String url = prop.getProperty("url");
 			String buildUrl=JenkinsConnector.getBuildUrl();
 			String buildNo=JenkinsConnector.getBuildNo();
-			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources");
+			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources/Recordings");
 			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports");
 			sb.append("<table width='40%' border=1 >");
 			sb.append(

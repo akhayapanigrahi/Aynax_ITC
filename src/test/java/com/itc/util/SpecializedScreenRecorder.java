@@ -25,7 +25,7 @@ public class SpecializedScreenRecorder extends ScreenRecorder {
  
     @Override
     public File createMovieFile(Format fileFormat) throws IOException {
-    	if (movieFolder.exists()) {
+    	/*if (movieFolder.exists()) {
     		try {
 				String SRC_FOLDER = System.getProperty("user.dir")+"\\src\\test\\resources\\Recordings";
     	    	File directory = new File(SRC_FOLDER);
@@ -35,10 +35,10 @@ public class SpecializedScreenRecorder extends ScreenRecorder {
 				e.printStackTrace();
 			}
     		
-    		 /*File file = new File(System.getProperty("user.dir")+"\\src\\test\\resources\\Recordings");
-    		 file.delete();*/
+    		 File file = new File(System.getProperty("user.dir")+"\\src\\test\\resources\\Recordings");
+    		 file.delete();
     	
-      } 
+      } */
           if (!movieFolder.exists()) {
                 movieFolder.mkdirs();
           } else if (!movieFolder.isDirectory()) {
@@ -49,7 +49,7 @@ public class SpecializedScreenRecorder extends ScreenRecorder {
            /* return  new File(movieFolder, name + "-"+ Registry.getInstance().getExtension(fileFormat));*/
             
                   
-         return new File(movieFolder, name + "-" + dateFormat.format(new Date()) + "."
+         return new File(movieFolder, name + "-" + dateFormat.format(new Date())+JenkinsConnector.getBuildId() + "."
                   + Registry.getInstance().getExtension(fileFormat));
     }
     

@@ -624,9 +624,9 @@ public class CustomReport implements IReporter{
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");
 			sb.append("<tr>");
 			sb.append("<td ><b><font  size=2 >APPLICATION URL</font></td><td align='center' size=2> <a href="+ url + "><font  color=green > " + url + "</a></font></b></td></tr>");
-			sb.append("<td><b><font  size=2>OS EXECUTED </font></td><td width=20 align='center' size=2> <font  color=Teal > " + OS+ "</b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>OS EXECUTED </font></td><td width=20 align='center' size=2> <font  color=green > " + OS+ "</b></td> </font></tr>");
 			sb.append("<td><b><font  size=2>DATE OF EXECUTION </font></td><td width=20 align='center' size=2> <font  color=green > " + new Date()+ " </b></td> </font></tr>");
-			sb.append("<td><b><font  size=2>BROWSER NAME </font></td><td width=20 align='center' size=2> <font  color=Teal > " + browsername+ "</b></td> </font></tr>");
+			sb.append("<td><b><font  size=2>BROWSER NAME </font></td><td width=20 align='center' size=2> <font  color=green > " + browsername+ "</b></td> </font></tr>");
 			sb.append("<td><b><font  size=2>BROWSER VERSION </font></td><td width=20 align='center' size=2><font  color=green >  " + browserVersion
 					+ " </b></td> </font></tr>");
 			sb.append("<td ><b><font  size=2>REPORT LINK</font> </td><td align='center' size=2> <a href="+ reportLink + "><font  color=Red > " + reportLink + "</a></b></td></tr>");

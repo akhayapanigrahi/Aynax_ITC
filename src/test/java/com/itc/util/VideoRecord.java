@@ -45,7 +45,7 @@ public class VideoRecord {
        public void startRecording() throws Exception
        {    
               //File file = new File("C:\\Videos");
-    	   File file = new File(System.getProperty("user.dir")+"\\src\\test\\resources");
+  		 File file = new File(System.getProperty("user.dir")+"\\src\\test\\resources\\Recordings");
                             
               Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
               int width = screenSize.width;

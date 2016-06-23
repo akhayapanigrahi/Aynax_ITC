@@ -660,10 +660,10 @@ public class CustomReport implements IReporter{
         sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
         sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
         sbuffer.append("<td align='center'><font  color=olive >Time Duration (hh:mm:ss)</td></tr>");
-        List<ITestNGMethod> lst=suite.getAllMethods();
+        /*List<ITestNGMethod> lst=suite.getAllMethods();
         for(int i=0;i<lst.size();i++){
         sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td></tr>");
-        }
+        }*/
         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");

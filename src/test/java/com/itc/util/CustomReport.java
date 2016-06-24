@@ -620,9 +620,9 @@ public class CustomReport extends ResultListener implements IReporter{
 			String url = prop.getProperty("url");
 			String buildUrl=JenkinsConnector.getBuildUrl();
 			String buildNo=JenkinsConnector.getBuildNo();
-			String VideoUrl=buildUrl.replace(buildNo, "ws/src/test/resources/Recordings");
-			String reportLink=buildUrl.replace(buildNo, "ws/target/surefire-reports");
-			String logLink=buildUrl.replace(buildNo, "ws/target/logs");
+			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources/Recordings");
+			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports/AynaxExtentReport.html");
+			String logLink=buildUrl.replaceAll(buildNo, "ws/target/logs/ALEFELog.txt");
 			sb.append("<table width='40%' border=1 >");
 			sb.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");

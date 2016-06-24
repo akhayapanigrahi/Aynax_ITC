@@ -29,8 +29,8 @@ public class EditExpensePageTest extends BaseTestObject {
 			objEditExpensePage = new EditExpensePage(driver);
 			objEditExpensePage.clickOnListExpense();
 			objEditExpensePage.clickOnExpenseLink1();
-			String amount = getValFromExcel(1, 4);
-			String notes = getValFromExcel(1, 5);
+			String amount = getValFromExcel(1,4);
+			String notes = getValFromExcel(1,5);
 			objEditExpensePage.editExpense(amount, notes);
 			flag1 = objEditExpensePage.isResultPageDisplayed();
 			// Assert.assertTrue(flag1);

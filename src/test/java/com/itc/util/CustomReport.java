@@ -22,6 +22,7 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -39,6 +40,7 @@ import org.testng.TestNGException;
 import org.testng.collections.Lists;
 import org.testng.internal.Utils;
 import org.testng.xml.XmlSuite;
+
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
 import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
@@ -46,22 +48,23 @@ import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
-public class CustomReport implements IReporter{
+public class CustomReport extends ResultListener implements IReporter{
 
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(" MMM d 'at' hh:mm a");
 	private PrintWriter m_out;
 	private int m_row;
 	private Integer m_testIndex;
 	private int m_methodIndex;
-	
 	private Scanner scanner;
 	public static Logger logger = Logger.getLogger(CustomReport.class);
 	private StringBuffer sb = new StringBuffer();
 	public String propertyFilePath = System.getProperty("user.dir")
 			+ "\\src\\test\\resources\\testdata\\testData.properties";
 	/**
+	 *  Author : Akshaya kumar Panigrahi
 	 * This method is the entry point of this class. TestNG calls this listener
 	 * method to generate the report.
+	 
 	 */
 		
 	public void generateReport(List<XmlSuite> xml,List<ISuite> suites,String outdir) {
@@ -137,8 +140,10 @@ public class CustomReport implements IReporter{
 			sb.append("<p> Please find the " + suiteName + " Report" + " </p>");
 			sb.append(printEnvironmentDetails(suites));
 			sb.append(printTestExecutionSummary(suites));
-			//sb.append(printMethodResult());
+			sb.append(printMethodResult());
 			sb.append("</body></html>");
+			sb.append("Regards,");
+			sb.append("Aynax Team");
 		}
 	}
 
@@ -176,7 +181,7 @@ public class CustomReport implements IReporter{
 		}
 		m_out.println("</table>");
 	}
-
+	
 	/**
 	 * Creates a section showing known results and console output for each
 	 * method
@@ -618,6 +623,7 @@ public class CustomReport implements IReporter{
 			String buildNo=JenkinsConnector.getBuildNo();
 			String VideoUrl=buildUrl.replaceAll(buildNo, "ws/src/test/resources/Recordings");
 			String reportLink=buildUrl.replaceAll(buildNo, "ws/target/surefire-reports");
+			String logLink=buildUrl.replaceAll(buildNo, "ws/target/logs");
 			sb.append("<table width='40%' border=1 >");
 			sb.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Environment Details </font></th>");
@@ -630,10 +636,13 @@ public class CustomReport implements IReporter{
 					+ " </b></td> </font></tr>");
 			sb.append("<td ><b><font  size=2>REPORT LINK</font> </td><td align='center' size=2> <a href="+ reportLink + "><font  color=Red > " + reportLink + "</a></b></td></tr>");
 			sb.append("<td ><b><font  size=2>VIDEO URL</font> </td><td align='center' size=2> <a href="	+ VideoUrl + "> <font  color=Fuchsia >" + VideoUrl + "</a></b></td></tr>");
+			sb.append("<td ><b><font  size=2>VIDEO URL</font> </td><td align='center' size=2> <a href="	+ logLink + "> <font  color=Fuchsia >" + logLink + "</a></b></td></tr>");
+
 			sb.append("</table>");
 		
 		return sb.toString();
 	}
+	
 	public String printTestExecutionSummary(List<ISuite> suites) {
 		 StringBuffer sbuffer = new StringBuffer();
 		 long testStart;
@@ -653,7 +662,6 @@ public class CustomReport implements IReporter{
 		 sbuffer.append(
 					"<th bgcolor='#5D7B9D'  colspan=2><col width=\"40%\">  <col width=\"60\"><font color='#fff' size=3> Test Execution Summary </font></th>");
 		 sbuffer.append("<tr>");
-        sbuffer.append("<h4>Test Execution Summary</h4>");
         sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
         sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
         sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
@@ -664,6 +672,7 @@ public class CustomReport implements IReporter{
         for(int i=0;i<lst.size();i++){
         sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td></tr>");
         }*/
+      
         sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
         sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");
@@ -676,18 +685,18 @@ public class CustomReport implements IReporter{
 		  return sbuffer.toString();
 	 }
 	
-	/* private String printMethodResult() {
+	 private String printMethodResult() {
 		 StringBuffer sbuffer1 = new StringBuffer();
          String body = "";
          Map<String, List<String>> resultMap = ResultListener.m_testResultMap;
 
-         int i = 1;
+       
          for (Map.Entry<String, List<String>> map : resultMap.entrySet()) {
 
                 String font = "";
                 String testMethodName = map.getKey();
                 String status = map.getValue().get(0);
-                String duration = map.getValue().get(1);
+               
 
                 if (status.equalsIgnoreCase("1"))
                       font = "<font color='green'>Pass</font>";
@@ -696,8 +705,8 @@ public class CustomReport implements IReporter{
                 else if (status.equalsIgnoreCase("3"))
                       font = "<font color='grey'>Skip</font>";
 
-                body = body + "<tr><td>" + i + "</td><td>" + testMethodName + "</td><td>" + font + "</td><td>" + duration + "</td>" + "</tr>";
-                i++;
+                body = body + "<tr>" + "<td>" + testMethodName + "</td><td>" + font + "</td>" + "</tr>";
+               
          }
          sbuffer1.append("<table width='40%' border=1 >");
 		 sbuffer1.append(
@@ -705,64 +714,10 @@ public class CustomReport implements IReporter{
 		 sbuffer1.append("<tr>");
 		 
          sbuffer1.append("<table width='60%' border='1' cellpadding='0' cellspacing='0' >"
-                      + "<tr bgcolor='99CCFF'><td>S.No</td><td>TestCase</td><td>Result</td><td>Time (mm:ss)</td></tr>" + body + "</table>");
-         //sbuffer.append("</body></html>");
+                      + "<tr bgcolor='99CCFF'><td> TestCase</td><td> Result</td></tr>" + body + "</table>");
 		  return sbuffer1.toString();
 
-  }*/
-	 
-	/*public String printMethodSummary(List<ISuite> suites) {
-		 StringBuffer sbuffer = new StringBuffer();
-		 long testStart;
-			long testEnd;
-		 for (ISuite suite : suites) {
-				Map<String, ISuiteResult> suiteResults = suite.getResults();
-				for (ISuiteResult sr : suiteResults.values()) {
-					ITestContext context = sr.getTestContext();
-		 int passedCount=context.getPassedTests().getAllResults().size();
-		 int skippedCount=context.getSkippedTests().getAllResults().size();
-		 int failedCount=context.getFailedTests().getAllResults().size();
-       int totalCount = passedCount + skippedCount + failedCount;
-       testStart = context.getStartDate().getTime();
-		 testEnd = context.getEndDate().getTime();
-		 String totalTime = convertLongToCanonicalLengthOfTime( testEnd - testStart );
-		 
-       sbuffer.append("<h4>Test Execution Summary</h4>");
-       sbuffer.append("<table cellspacing=\"0\" cellpadding=\"0\" width=30% border=3 class=\"param\"> ");
-       sbuffer.append("<tr><td align='center'><font  color=blue >Test Methods</td>");
-       sbuffer.append("<td align='center'><font  color=green >Pass Count</td>");
-       sbuffer.append("<td align='center'><font  color=red >Fail Count</td>");
-       sbuffer.append("<td align='center'><font  color=grey >Skip Count</td>");
-       sbuffer.append("<td align='center'><font  color=blue >Total Count</td>");
-      sbuffer.append("<td align='center'><font  color=blue >Result</td>");
-       sbuffer.append("<td align='center'><font  color=blue >Time Duration (hh:mm:ss)</td></tr>");
-      //Below is to print Classes 
-       for(int i=0;i<size;i++){
-      	
-      String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
-      sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ xmlName + ">"+ xmlName + "</a></td>");}	
-      	 //String xmlName = context.getCurrentXmlTest().getClasses().get(i).getName();
-      	 //sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ testName + ">"+ testName + "</a></td>");
-       for(int i=0;i<size;i++){
-      	 System.out.println("All Methods are"+suite.getAllMethods());
-       }
-       List<ITestNGMethod> lst=suite.getAllMethods();
-       for(int i=0;i<lst.size();i++){
-      sbuffer.append("<tr><td align='center'><font  color=blue > <a href="+ lst.get(i).getMethodName() + ">"+ lst.get(i).getMethodName() + "</a></td>");
-       }
-       sbuffer.append("<td align='center'><font  color=green >" + passedCount + "</td>");
-       sbuffer.append("<td align='center'><font  color=red >" + failedCount + "</td>");
-       sbuffer.append("<td align='center'><font  color=grey >" + skippedCount + "</td>");
-       sbuffer.append("<td align='center'><font  color=blue >" + totalCount + "</td>");
-       
-       sbuffer.append("<td align='center'><font  color=blue >" + totalTime + "</td>");
-       sbuffer.append("</table>");
-       }
-				}
-		 
-		  return sbuffer.toString();
-	 }*/
-	
+  }
 	
 	@SuppressWarnings("unused")
 	private void summaryCell(String[] val) {

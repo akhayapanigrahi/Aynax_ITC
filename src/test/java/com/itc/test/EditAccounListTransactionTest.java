@@ -30,13 +30,13 @@ public class EditAccounListTransactionTest extends BaseTestObject{
 	{
 		objEditAccountPage= new EditAccountListTransaction(driver);
 		objEditAccountPage.clickOnChartAccount();
-		String vendorname =getValFromExcel(1,2);
-	    String address =getValFromExcel(1,3);
+		String vendorname =getValFromExcel(3,2);
+	    String balance =getValFromExcel(3,3);
 		//objEditVendorPage.clickOnVendorLink();
 		objEditAccountPage.isTitleDisplayed();
 		//Assert.assertTrue(title.contains("Edit Vendor:"));
 		objEditAccountPage.clickOnAccountLink1(); 
-		objEditAccountPage.editExpense(vendorname, address);
+		objEditAccountPage.editExpense(vendorname, balance);
 	    objEditAccountPage.isResultPageDisplayed();
 	   // Assert.assertTrue(flag1);
 	        
@@ -55,11 +55,11 @@ public class EditAccounListTransactionTest extends BaseTestObject{
 	{
 		objEditAccountPage= new EditAccountListTransaction(driver);
 		objEditAccountPage.clickOnChartAccount();
-		String vendorname =getValFromExcel(2,2);
-	    String address =getValFromExcel(2,3);
+		String vendorname =getValFromExcel(4,2);
+	    String balance =getValFromExcel(4,3);
 		objEditAccountPage.isTitleDisplayed();
 		objEditAccountPage.clickOnAccountLink2(); 
-		objEditAccountPage.editExpense(vendorname, address);
+		objEditAccountPage.editExpense(vendorname, balance);
 	    objEditAccountPage.isResultPageDisplayed();
 	    //Assert.assertTrue(flag1);
 	        

@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.ListPaymentPage;
@@ -13,11 +12,11 @@ public class ListPaymentPageTest extends BaseTestObject {
 	boolean flag1=false;
 	boolean titleflag=false;
 	
-	@Parameters({ "browserType"})
-	@Test(priority = 1, enabled = true,groups="Regression")
+	//@Parameters({ "browserType"})
+	@Test(priority = 0, enabled = true,groups="Regression")
 	public void verifyNewExpensePageDisplay() throws Exception {
 		try {
-			login.verifyLoginPage();
+			//login.verifyLoginPage();
 			objListPaymentPage = new ListPaymentPage(driver);
 			objListPaymentPage.clickOnListPayment();
 			flag1=objListPaymentPage.isResultPageDisplayed();

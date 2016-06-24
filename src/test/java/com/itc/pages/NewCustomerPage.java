@@ -46,10 +46,10 @@ public class NewCustomerPage extends BasePageObject {
 			flag = isElementPresent(salesTab);
 			if (flag) {
 				logger.info("New Customer tab is displayed");
-				WebElement expTab = driver.findElement(salesTab);
+				WebElement SalesTab = driver.findElement(salesTab);
 				WebElement custlink = driver.findElement(newCustomer);
 				Actions act = new Actions(driver);
-				act.moveToElement(expTab).click(expTab).click(custlink).doubleClick().build().perform();
+				act.moveToElement(SalesTab).click(SalesTab).click(custlink).doubleClick().build().perform();
 				AynaxUtil.explicitWait(3000);
 				act.click().build().perform();
 				Assert.assertTrue(flag, "Accounting link is not displayed");

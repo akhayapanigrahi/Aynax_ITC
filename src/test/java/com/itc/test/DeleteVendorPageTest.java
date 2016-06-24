@@ -1,9 +1,10 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import com.itc.pages.DeleteVendorPage;
 import com.itc.util.BaseTestObject;
+
 import junit.framework.Assert;
 
 
@@ -15,13 +16,13 @@ public class DeleteVendorPageTest extends BaseTestObject{
 	boolean flag1 = false;
 	String titleflag=null;
 		
-	@Parameters({"browserType"})
-	@Test(priority=1, enabled=true,groups="Regression")
+	//@Parameters({"browserType"})
+	@Test(priority=0, enabled=true,groups="Regression")
 	public void verifyDeleteVendor() throws Exception
 	{
 	try 
 	{
-		login.verifyLoginPage();
+		//login.verifyLoginPage();
 		objDeleteVendorPage = new DeleteVendorPage(driver);
 		objDeleteVendorPage.clickOnListVendor();
 		objDeleteVendorPage.vendorDeletion1();

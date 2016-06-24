@@ -41,7 +41,7 @@ public class ListPaymentPage extends BasePageObject{
 			WebElement paymentlink = driver.findElement(listPaymentLink);
 			Actions act=new Actions(driver);
 			act.moveToElement(expTab).click(expTab).click(paymentlink).doubleClick().build().perform();
-			AynaxUtil.explicitWait(3000);
+			//AynaxUtil.explicitWait(3000);
 			act.click().build().perform();
 			AynaxUtil.explicitWait(3000);
 			
@@ -73,10 +73,10 @@ public class ListPaymentPage extends BasePageObject{
 			System.out.println();
 			String expectedtitle = getPageTitle();
 			logger.info("Title is "+expectedtitle);
-			Assert.assertTrue(expectedtitle.contains("List of Outgoing Payments:: Aynax.com"));
+			Assert.assertTrue(expectedtitle.startsWith("List of Outgoing"));
 			String text = getText(listPaymenttext);
 			logger.info("Success text"+text);
-			Assert.assertTrue(text.contains("List of Outgoing Payments"));
+			Assert.assertTrue(text.startsWith("List of Outgoing Payments"));
 			
 		} 
 		catch (Exception e) 

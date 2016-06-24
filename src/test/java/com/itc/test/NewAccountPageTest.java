@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.NewAccountPage;
@@ -18,14 +17,14 @@ public class NewAccountPageTest extends BaseTestObject{
 	boolean titleflag=false;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 	
-	@Parameters({"browserType"})
-	@Test(priority=0, enabled=true,groups="Regression")
+	//@Parameters({"browserType"})
+	//@Test(priority=0, enabled=true,groups="Regression")
 	public void login() throws Exception{
 		login.verifyLoginPage();
 		
 	}
 	
-	@Test(priority=1, enabled=true,groups="Regression")
+	@Test(priority=0, enabled=true,groups="Regression")
 	public void verifyNewAccount1() throws Exception
 	{
 	try 
@@ -45,7 +44,7 @@ public class NewAccountPageTest extends BaseTestObject{
 	}
 
 	}
-	@Test(priority=2, enabled=true,groups="Regression")
+	@Test(priority=1, enabled=true,groups="Regression")
 	public void verifyNewAccount2() throws Exception
 	{
 	try 
@@ -66,7 +65,7 @@ public class NewAccountPageTest extends BaseTestObject{
 	}
 
 	}
-	@Test(priority=3, enabled=true,groups="Regression")
+	@Test(priority=2, enabled=true,groups="Regression")
 	public void verifyNewAccount3() throws Exception
 	{
 	try 

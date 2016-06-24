@@ -23,7 +23,7 @@ public class EditExpensePageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 1, enabled = true, groups = "SanityTest")
+	@Test(priority = 0, enabled = true, groups = "SanityTest")
 	public void verifyEditExpenseCreation1() throws Exception {
 		try {
 			objEditExpensePage = new EditExpensePage(driver);
@@ -45,7 +45,7 @@ public class EditExpensePageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 2, enabled = true, groups = "SanityTest")
+	@Test(priority = 1, enabled = true, groups = "SanityTest")
 	public void verifyEditExpenseCreation2() throws Exception {
 		try {
 

@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.NewJournalPage;
@@ -16,15 +15,15 @@ public class NewJournalPageTest extends BaseTestObject {
 	boolean titleflag = false;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType" })
-	@Test(priority = 0, enabled = true,groups="Regression")
+	//@Parameters({ "browserType" })
+	//@Test(priority = 0, enabled = true,groups="Regression")
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
 	}
 
 
-	@Test(priority = 1, enabled = true,groups="Regression")
+	@Test(priority = 0, enabled = true,groups="Regression")
 	public void verifyJournalCreation() throws Exception {
 		try {
 			objNewJournalPage = new NewJournalPage(driver);
@@ -45,7 +44,7 @@ public class NewJournalPageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 2, enabled = true,groups="Regression")
+	@Test(priority = 1, enabled = true,groups="Regression")
 	public void verifyJournalCreation2() throws Exception {
 		try {
 			objNewJournalPage = new NewJournalPage(driver);

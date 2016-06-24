@@ -17,7 +17,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
 	@Parameters({ "browserType" })
-	@Test(groups={"SanityTest","Regression"})
+	@Test(groups={"SanityTest"})
 	
 	public void Login() throws Exception {
 		login.verifyLoginPage();
@@ -41,7 +41,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 		    objNewCustPage.newCustomerCreation(customerName, frmaddress, phone, fax, fname, lname, mail, phoneNo);
 		    objNewCustPage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
-			titleflag = objNewCustPage.isTitleDisplayed();
+			 objNewCustPage.isTitleDisplayed();
 
 		}
 
@@ -68,7 +68,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 		    objNewCustPage.newCustomerCreation(customerName, frmaddress, phone, fax, fname, lname, mail, phoneNo);
 		    objNewCustPage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
-			titleflag = objNewCustPage.isTitleDisplayed();
+			objNewCustPage.isTitleDisplayed();
 
 		}
 
@@ -96,7 +96,7 @@ public class NewCustomerPageTest extends BaseTestObject {
 		    objNewCustPage.newCustomerCreation(customerName, frmaddress, phone, fax, fname, lname, mail, phoneNo);
 		    objNewCustPage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
-			titleflag = objNewCustPage.isTitleDisplayed();
+			 objNewCustPage.isTitleDisplayed();
 
 		}
 

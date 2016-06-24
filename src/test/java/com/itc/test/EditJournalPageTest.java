@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.EditJournalPage;
@@ -17,14 +16,14 @@ public class EditJournalPageTest extends BaseTestObject {
 	public static String excelPath = System.getProperty("user.dir")
 			+ "\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({ "browserType"})
-	@Test(priority = 0, enabled = true,groups="Regression")
+	//@Parameters({ "browserType"})
+	//@Test(priority = 0, enabled = true,groups="Regression")
 	public void Login() throws Exception {
 		login.verifyLoginPage();
 
 	}
 
-	@Test(priority = 1, enabled = true,groups="Regression")
+	@Test(priority = 0, enabled = true,groups="Regression")
 	public void verifyJournalEdit() throws Exception {
 		try {
 			String debit = getValFromExcel(1, 2);
@@ -44,7 +43,7 @@ public class EditJournalPageTest extends BaseTestObject {
 
 	}
 
-	@Test(priority = 2, enabled = true,groups="Regression")
+	@Test(priority = 1, enabled = true,groups="Regression")
 	public void verifyJournalEntryDelete() throws Exception {
 		try {
 			objEditJournalPage = new EditJournalPage(driver);

@@ -46,6 +46,7 @@ public class NewJournalPage extends BasePageObject {
 			if (flag) {
 				logger.info("New Accounting tab is displayed");
 				WebElement accTab = driver.findElement(accountingTab);
+				AynaxUtil.explicitWait(3000);
 				WebElement journallink = driver.findElement(newJournal);
 				Actions act = new Actions(driver);
 				act.moveToElement(accTab).click(accTab).click(journallink).doubleClick().build().perform();

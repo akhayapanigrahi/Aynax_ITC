@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.EditAccountListTransaction;
@@ -17,14 +16,14 @@ public class EditAccounListTransactionTest extends BaseTestObject{
 	String titleflag=null;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({"browserType"})
-	@Test(priority=0,groups="Regression")
+	//@Parameters({"browserType"})
+	//@Test(priority=0,groups="Regression")
 	public void Login() throws Exception{
 		login.verifyLoginPage();
 	}
 	
 	
-	@Test(priority=1, enabled=true,groups="Regression")
+	@Test(priority=0, enabled=true,groups="Regression")
 	public void verifyEditAccount1() throws Exception
 	{
 	try 
@@ -49,7 +48,7 @@ public class EditAccounListTransactionTest extends BaseTestObject{
 	}
 
 	}
-	@Test(priority=2, enabled=true,groups="Regression")
+	@Test(priority=1, enabled=true,groups="Regression")
 	public void verifyEditAccount2() throws Exception
 	{
 	try 
@@ -72,28 +71,7 @@ public class EditAccounListTransactionTest extends BaseTestObject{
 	}
 
 	}
-	//@Test(priority=3, enabled=true,groups="Regression")
-	public void verifyEditAccount3() throws Exception
-	{
-	try 
-	{
-		objEditAccountPage= new EditAccountListTransaction(driver);
-		objEditAccountPage.clickOnChartAccount();
-		String vendorname =getValFromExcel(8,8);
-	    String address =getValFromExcel(2,3);
-		objEditAccountPage.isTitleDisplayed();
-		objEditAccountPage.clickOnAccountLink2(); 
-		objEditAccountPage.editExpense(vendorname, address);
-	   objEditAccountPage.isResultPageDisplayed();
-	        
-	} 
 	
-	catch (Exception e) 
-	{
-		e.printStackTrace();
-	}
-
-	}
 public static String getValFromExcel(int row,int col) throws Exception{
 		
 		ExcelutilObject.setExcelFile(excelPath, "EditAccountData");

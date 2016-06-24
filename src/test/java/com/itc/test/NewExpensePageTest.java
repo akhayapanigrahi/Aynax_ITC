@@ -63,7 +63,26 @@ public class NewExpensePageTest extends BaseTestObject {
 			throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE"
 					+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
 		}
+	}
+		@Test(priority = 2, enabled = true,groups="SanityTest")
+		public void verifyExpenseCreation3() throws Exception {
+			try {
+				objNewExpensePage = new NewExpensePage(driver);
+				objNewExpensePage.clickOnExpenseTab();
+				String name=getValFromExcel(4,2);
+				String amount=getValFromExcel(6, 6);
+				String notes=getValFromExcel(2, 5);
+				objNewExpensePage.newExpenseWithNameSelection(name,amount,notes);
+				 objNewExpensePage.isResultPageDisplayed();
+				//Assert.assertTrue(flag1);
+				titleflag = objNewExpensePage.isTitleDisplayed();
 
+			}
+
+			catch (Exception e) {
+				throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE"
+						+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
+			}
 	}
 	
 	

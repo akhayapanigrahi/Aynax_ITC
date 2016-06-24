@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.EditVendorPage;
@@ -19,14 +18,14 @@ public class EditVendorPageTest extends BaseTestObject{
 	String titleflag=null;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({"browserType"})
-	@Test(priority=0, enabled=true,groups="Regression")
+	//@Parameters({"browserType"})
+	//@Test(priority=0, enabled=true,groups="Regression")
 	public void Login() throws Exception{
 		login.verifyLoginPage();
 		
 	}
 	
-	@Test(priority=1, enabled=true,groups="Regression")
+	@Test(priority=0, enabled=true,groups="Regression")
 	public void verifyEditVendor1() throws Exception
 	{
 	try 
@@ -51,7 +50,7 @@ public class EditVendorPageTest extends BaseTestObject{
 	}
 
 	}
-	@Test(priority=2, enabled=true,groups="Regression")
+	@Test(priority=1, enabled=true,groups="Regression")
 	public void verifyEditVendor2() throws Exception
 	{
 	try 
@@ -74,29 +73,9 @@ public class EditVendorPageTest extends BaseTestObject{
 	}
 
 	}
-	@Test(priority=3, enabled=true,groups="Regression")
-	public void verifyEditVendor3() throws Exception
-	{
-	try 
-	{
-		objEditVendorPage = new EditVendorPage(driver);
-		objEditVendorPage.clickOnListVendorLink();		
-		String vendorname =getValFromExcel(5,2);
-	    String address =getValFromExcel(5,3);
-		objEditVendorPage.isTitleDisplayed();
-		objEditVendorPage.clickOnVendorLink2(); 
-		objEditVendorPage.EditVendor(vendorname, address);
-	    objEditVendorPage.isResultPageDisplayed();
-	    //Assert.assertTrue(flag1);
-	        
-	} 
 	
-	catch (Exception e) 
-	{
-		e.printStackTrace();
-	}
 
-	}
+	
 public static String getValFromExcel(int row,int col) throws Exception{
 		
 		ExcelutilObject.setExcelFile(excelPath, "EditVendorData");

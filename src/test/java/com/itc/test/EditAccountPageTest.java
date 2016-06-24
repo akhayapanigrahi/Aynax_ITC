@@ -1,6 +1,5 @@
 package com.itc.test;
 
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.itc.pages.EditAccountPage;
@@ -17,8 +16,8 @@ public class EditAccountPageTest extends BaseTestObject{
 	String titleflag=null;
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 
-	@Parameters({"browserType"})
-	@Test(priority=0,groups="Regression")
+	//@Parameters({"browserType"})
+	//@Test(priority=0,groups="Regression")
 	public void Login() throws Exception{
 		login.verifyLoginPage();
 	}

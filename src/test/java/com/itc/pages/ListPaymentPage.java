@@ -41,7 +41,7 @@ public class ListPaymentPage extends BasePageObject{
 			WebElement paymentlink = driver.findElement(listPaymentLink);
 			Actions act=new Actions(driver);
 			act.moveToElement(expTab).click(expTab).click(paymentlink).doubleClick().build().perform();
-			//AynaxUtil.explicitWait(3000);
+			AynaxUtil.explicitWait(3000);
 			act.click().build().perform();
 			AynaxUtil.explicitWait(3000);
 			

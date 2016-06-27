@@ -44,6 +44,7 @@ public class ReciptPage extends BasePageObject {
 	By amount = By.id("amountReceipt");
 	By categoryDropdown = By.xpath("//select[@id='categoryReceipt']");
 	By paidDropdown = By.xpath("//select[@id='paidReceipt']");
+	By logOut=By.linkText("Log out");
 	public static String excelPath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\testDataSheet.xlsx";
 	String filePath = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\SampleDoc.docx";
 
@@ -115,7 +116,11 @@ public class ReciptPage extends BasePageObject {
 			
 	}
 	
-	
+	public void logout() throws Exception{
+		setElement(logOut).click();
+		
+		
+	}
 	public boolean isTitleDisplayed() {
 
 		getPageTitle();

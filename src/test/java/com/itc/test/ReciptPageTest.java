@@ -45,7 +45,21 @@ public class ReciptPageTest extends BaseTestObject{
 			objEditExpensePage.isTitleDisplayed();
 			objEditExpensePage.vendorDeletion1();
 			objEditExpensePage.vendorDeletion2();
+			
 
+		}
+
+		catch (Exception e) {
+			throw new Exception("FAILED CLICK ON SITELOGO AND VERFIY PAGETITLE TESTCASE"
+					+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
+		}
+
+	}
+	@Test(priority = 3, enabled = true, groups = "SanityTest")
+	public void logOut() throws Exception {
+		try {
+			objReciptPage = new ReciptPage(driver);
+			objReciptPage.logout();
 		}
 
 		catch (Exception e) {

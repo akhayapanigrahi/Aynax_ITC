@@ -34,7 +34,7 @@ public class NewExpensePageTest extends BaseTestObject {
 			objNewExpensePage.newExpenseWithNameInput(name,amount,notes);
 			 objNewExpensePage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
-			titleflag = objNewExpensePage.isTitleDisplayed();
+			 objNewExpensePage.isTitleDisplayed();
 
 		}
 
@@ -55,7 +55,7 @@ public class NewExpensePageTest extends BaseTestObject {
 			objNewExpensePage.newExpenseWithNameSelection(name,amount,notes);
 			 objNewExpensePage.isResultPageDisplayed();
 			//Assert.assertTrue(flag1);
-			titleflag = objNewExpensePage.isTitleDisplayed();
+			objNewExpensePage.isTitleDisplayed();
 
 		}
 
@@ -75,7 +75,7 @@ public class NewExpensePageTest extends BaseTestObject {
 				objNewExpensePage.newExpenseWithNameSelection(name,amount,notes);
 				 objNewExpensePage.isResultPageDisplayed();
 				//Assert.assertTrue(flag1);
-				titleflag = objNewExpensePage.isTitleDisplayed();
+				 objNewExpensePage.isTitleDisplayed();
 
 			}
 

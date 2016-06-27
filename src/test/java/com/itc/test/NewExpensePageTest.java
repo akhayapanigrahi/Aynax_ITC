@@ -64,7 +64,7 @@ public class NewExpensePageTest extends BaseTestObject {
 					+ "\n clickOnSiteLogoAndCheckThePageTitle" + e.getLocalizedMessage());
 		}
 	}
-		@Test(priority = 2, enabled = true,groups="SanityTest")
+		@Test(priority = 2, enabled = true,groups="Regression")
 		public void verifyExpenseCreation3() throws Exception {
 			try {
 				objNewExpensePage = new NewExpensePage(driver);

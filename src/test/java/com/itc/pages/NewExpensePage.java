@@ -239,7 +239,7 @@ public class NewExpensePage extends BasePageObject {
 				Assert.assertTrue(expectedtitle.contains("Edit Expense:: Aynax.com"));
 				String text = getText(errorDialog);
 				logger.info("The error text is" + text);
-				Assert.assertTrue(text.contains("Row 1: Amount cannot be blank."));
+				Assert.assertTrue(text.startsWith("×"));
 			}
 		} catch (Exception e) {
 			throw new Exception("New Vendor page is displayed::" + isResultPageDisplayed() + e.getLocalizedMessage());

@@ -32,9 +32,9 @@ public class EditExpensePageTest extends BaseTestObject {
 			String amount = getValFromExcel(1,4);
 			String notes = getValFromExcel(1,5);
 			objEditExpensePage.editExpense(amount, notes);
-			flag1 = objEditExpensePage.isResultPageDisplayed();
+			 objEditExpensePage.isResultPageDisplayed();
 			// Assert.assertTrue(flag1);
-			titleflag = objEditExpensePage.isTitleDisplayed();
+			objEditExpensePage.isTitleDisplayed();
 
 		}
 
@@ -55,7 +55,7 @@ public class EditExpensePageTest extends BaseTestObject {
 			objEditExpensePage.editExpense(amount, notes);
 			objEditExpensePage.isResultPageDisplayed();
 			// Assert.assertTrue(flag1);
-			titleflag = objEditExpensePage.isTitleDisplayed();
+			 objEditExpensePage.isTitleDisplayed();
 
 		}
 

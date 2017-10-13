@@ -19,6 +19,9 @@
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>SanityTest.xml</suiteXmlFile> -->
 						<SuiteXmlFile>${basedir}\src\test\resources\testsuites\${SuiteFile}</SuiteXmlFile>
+						<SuiteXmlFile>src\test\resources\testsuites\HomeTestSuite.xml</SuiteXmlFile>
+
+
 					</suiteXmlFiles>
 
 				</configuration>

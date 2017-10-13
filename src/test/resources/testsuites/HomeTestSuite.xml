@@ -8,7 +8,7 @@
 		  <class name="com.itc.test.LoginPageTest" />
 
 			<class name="com.itc.test.NewVendorPageTest" />
-		<class name="com.itc.test.ReportGenerator" />
+		<class name="com.itc.util.ReportGenerator" />
 
 			<!--<class name="com.itc.test.EditVendorPageTest" />
 			<class name="com.itc.test.DeleteVendorPageTest" />
